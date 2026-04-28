@@ -6,7 +6,6 @@ dependencyResolutionManagement {
         mavenCentral()
 //        mavenLocal()
     }
-}  }
 }
 
 rootProject.name = "H04-Root"
