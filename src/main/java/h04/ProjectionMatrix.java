@@ -10,20 +10,22 @@ public class ProjectionMatrix {
     private int pivotY2;
 
     public ProjectionMatrix(Tetromino tetromino) {
-        this(TemplateData.of(tetromino));
+        this.shape = tetromino.shape;
+        this.pivotX2 = tetromino.getPivotX2();
+        this.pivotY2 = tetromino.getPivotY2();
     }
 
-    public ProjectionMatrix(TemplateData templateData) {
-        applyTemplateData(templateData);
-    }
+//    public ProjectionMatrix(TemplateData templateData) {
+//        applyTemplateData(templateData);
+//    }
 
     public ProjectionMatrix(boolean[][] shape) {
         this(shape, false);
     }
 
     public ProjectionMatrix(boolean[][] shape, boolean mirror) {
-        TemplateData.validateMatrix(shape);
-        this.shape = TemplateData.deepCopy(shape);
+        Tetromino.validateMatrix(shape);
+        this.shape = Tetromino.deepCopy(shape);
         this.pivotX2 = shape[0].length - 1;
         this.pivotY2 = shape.length - 1;
         if (mirror) {
@@ -75,7 +77,7 @@ public class ProjectionMatrix {
     }
 
     public boolean[][] getShape() {
-        return TemplateData.deepCopy(shape);
+        return Tetromino.deepCopy(shape);
     }
 
     public int getPivotX2() {
@@ -86,11 +88,11 @@ public class ProjectionMatrix {
         return pivotY2;
     }
 
-    private void applyTemplateData(TemplateData data) {
-        this.shape = data.getShape();
-        this.pivotX2 = data.getPivotX2();
-        this.pivotY2 = data.getPivotY2();
-    }
+//    private void applyTemplateData(TemplateData data) {
+//        this.shape = data.getShape();
+//        this.pivotX2 = data.getPivotX2();
+//        this.pivotY2 = data.getPivotY2();
+//    }
 
     private boolean[][] rotateAroundPivot(boolean clockwise) {
         boolean[][] rotated = new boolean[shape.length][shape[0].length];

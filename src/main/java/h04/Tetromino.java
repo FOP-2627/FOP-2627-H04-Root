@@ -54,17 +54,21 @@ public enum Tetromino {
         return pivotY2;
     }
 
-    public TemplateData mirrored() {
-        boolean[][] mirroredShape = deepCopy(shape);
-        for (int y = 0; y < mirroredShape.length; y++) {
-            for (int left = 0, right = mirroredShape[y].length - 1; left < right; left++, right--) {
-                boolean tmp = mirroredShape[y][left];
-                mirroredShape[y][left] = mirroredShape[y][right];
-                mirroredShape[y][right] = tmp;
-            }
-        }
-        int mirroredPivotX2 = 2 * (mirroredShape[0].length - 1) - pivotX2;
-        return new TemplateData(mirroredShape, mirroredPivotX2, pivotY2);
+//    public TemplateData mirrored() {
+//        boolean[][] mirroredShape = deepCopy(shape);
+//        for (int y = 0; y < mirroredShape.length; y++) {
+//            for (int left = 0, right = mirroredShape[y].length - 1; left < right; left++, right--) {
+//                boolean tmp = mirroredShape[y][left];
+//                mirroredShape[y][left] = mirroredShape[y][right];
+//                mirroredShape[y][right] = tmp;
+//            }
+//        }
+//        int mirroredPivotX2 = 2 * (mirroredShape[0].length - 1) - pivotX2;
+//        return new TemplateData(mirroredShape, mirroredPivotX2, pivotY2);
+//    }
+
+    public Tetromino mirrored() {
+        return this == L ? J : this == J ? L : this == S ? Z : this == Z ? S : this;
     }
 
     static boolean[][] deepCopy(boolean[][] matrix) {
