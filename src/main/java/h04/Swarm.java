@@ -6,6 +6,10 @@ public abstract class Swarm {
 
     private Tetrobot[] tetrobots;
 
+    private ProjectionMatrix projectionMatrix;
+
+    private TetrisWorld tetrisWorld;
+
 //    public void move() {
 //        for (int i = 0; i < tetrobots.length; i++) {
 //            tetrobots[i].move();
@@ -32,5 +36,5 @@ public abstract class Swarm {
         return true;
     }
 
-    
+
 }

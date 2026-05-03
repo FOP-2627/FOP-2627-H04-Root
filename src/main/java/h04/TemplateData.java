@@ -52,11 +52,11 @@ public final class TemplateData {
 //        {false, false, false}
 //    };
 
-    private static final TemplateData I_DATA = new TemplateData(Tetromino.I.template, 3, 3);
-    private static final TemplateData O_DATA = new TemplateData(Tetromino.O.template, 3, 1);
-    private static final TemplateData T_DATA = new TemplateData(Tetromino.T.template, 2, 2);
-    private static final TemplateData L_DATA = new TemplateData(Tetromino.L.template, 2, 2);
-    private static final TemplateData S_DATA = new TemplateData(Tetromino.S.template, 2, 2);
+    private static final TemplateData I_DATA = new TemplateData(Tetromino.I.shape, 3, 3);
+    private static final TemplateData O_DATA = new TemplateData(Tetromino.O.shape, 3, 1);
+    private static final TemplateData T_DATA = new TemplateData(Tetromino.T.shape, 2, 2);
+    private static final TemplateData L_DATA = new TemplateData(Tetromino.L.shape, 2, 2);
+    private static final TemplateData S_DATA = new TemplateData(Tetromino.S.shape, 2, 2);
 
     private static final Map<Tetromino, TemplateData> BASE_TEMPLATES = Map.of(
         Tetromino.I, I_DATA,
