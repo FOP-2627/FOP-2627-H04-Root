@@ -1,11 +1,10 @@
 package h04.swarms;
 
 import fopbot.Direction;
-import h04.ProjectionMatrix;
-import h04.TetrisWorld;
-import h04.Tetrobot;
-import h04.Tetromino;
+import h04.*;
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
+@DoNotTouch
 public abstract class Swarm {
 
     protected int x;
@@ -44,6 +43,19 @@ public abstract class Swarm {
         return true;
     }
 
-    public abstract void spawn();
+    public void spawn() {
+        if (this.tetrobots != null) {
+            for (int i = 0; i < tetrobots.length; i++) {
+                Util.removeRobot(tetrobots[i]);
+            }
+        }
+
+        int[][] projected = projectionMatrix.projectToWorld(x, y);
+        Tetrobot[] newTetrobots = new Tetrobot[projected.length];
+        for (int i = 0; i < projected.length; i++) {
+            newTetrobots[i] = new Tetrobot(projected[i][0], projected[i][1]);
+        }
+        this.tetrobots = newTetrobots;
+    }
 
 }

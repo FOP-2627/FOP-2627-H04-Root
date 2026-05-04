@@ -4,12 +4,14 @@ import fopbot.Direction;
 import fopbot.FieldEntity;
 import fopbot.KarelWorld;
 import fopbot.Robot;
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+@DoNotTouch
 public class Util {
 
     public static FieldEntity[] getEntitiesInFrontOf(Robot robot) {
