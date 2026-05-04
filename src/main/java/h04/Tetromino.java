@@ -22,14 +22,14 @@ public enum Tetromino {
     J(new boolean[][]{
         {false, true, false},
         {false, true, false},
-        {false, true, true}}, 2, 2),
+        {true, true, false}}, 2, 2),
     S(new boolean[][]{
         {false, true, true},
         {true, true, false},
         {false, false, false}}, 2, 2),
     Z(new boolean[][]{
-        {false, true, true},
         {true, true, false},
+        {false, true, true},
         {false, false, false}}, 2, 2);
 
     public final boolean[][] shape;

@@ -1,5 +1,10 @@
 package h04;
 
+import fopbot.Direction;
+import fopbot.World;
+import h04.swarms.S;
+import h04.swarms.Swarm;
+
 /**
  * Main entry point in executing the program.
  */
@@ -34,6 +39,15 @@ public class Main {
      * @param args program arguments, currently ignored
      */
     public static void main(String[] args) {
+
+        World.setSize(10, 10);
+        World.setVisible(true);
+
+        Swarm s = new S(5, 5, false);
+        s.spawn();
+        s.turnRight();
+        s.move(Direction.DOWN);
+
         TetrisWorld tetrisWorld = new TetrisWorld();
 
         // 1) Create tetromino projection matrices.

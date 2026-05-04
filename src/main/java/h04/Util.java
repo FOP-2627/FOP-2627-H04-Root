@@ -1,9 +1,6 @@
 package h04;
 
-import fopbot.Direction;
-import fopbot.FieldEntity;
-import fopbot.KarelWorld;
-import fopbot.Robot;
+import fopbot.*;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 import java.lang.reflect.Field;
@@ -15,21 +12,27 @@ import java.util.List;
 public class Util {
 
     public static FieldEntity[] getEntitiesInFrontOf(Robot robot) {
-        try {
-            Class<?> robotClass = robot.getClass();
-            Field world = robotClass.getDeclaredField("world");
-            world.setAccessible(true);
-            KarelWorld karelWorld = (KarelWorld) world.get(robot);
-            world.setAccessible(false);
-
+//        try {
+//            Class<?> robotClass = robot.getClass();
+//            Field world = robotClass.getDeclaredField("world");
+//            world.setAccessible(true);
+//            KarelWorld karelWorld = (KarelWorld) world.get(robot);
+//            world.setAccessible(false);
+//
+//            Direction direction = robot.getDirection();
+//            int x = robot.getX() + direction.getDx();
+//            int y = robot.getY() + direction.getDy();
+//            fopbot.Field field = karelWorld.getField(x, y);
+//            return field.getEntities().toArray(new FieldEntity[0]);
+//        } catch (NoSuchFieldException | IllegalAccessException e) {
+//            throw new RuntimeException(e);
+//        }
+            KarelWorld world = World.getGlobalWorld();
             Direction direction = robot.getDirection();
             int x = robot.getX() + direction.getDx();
             int y = robot.getY() + direction.getDy();
-            fopbot.Field field = karelWorld.getField(x, y);
+            fopbot.Field field = world.getField(x, y);
             return field.getEntities().toArray(new FieldEntity[0]);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public static void removeEntity(FieldEntity entity, KarelWorld karelWorld) {
