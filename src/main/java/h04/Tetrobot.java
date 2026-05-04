@@ -58,6 +58,7 @@ public class Tetrobot extends Robot {
 //        return true;
 //    }
 
+    @Override
     public boolean isFrontClear() {
         return true;
     }
@@ -75,7 +76,6 @@ public class Tetrobot extends Robot {
 
     public void despawn() {
         this.turnOff();
-        this.crash();
         Util.removeRobot(this);
     }
 }
