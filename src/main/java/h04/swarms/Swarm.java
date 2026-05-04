@@ -69,4 +69,15 @@ public abstract class Swarm {
         }
     }
 
+    public void turnLeft() {
+        projectionMatrix.rotateLeft();
+        int[][] projected = projectionMatrix.projectToWorld(x, y);
+        for (int i = 0; i < tetrobots.length; i++) {
+            int newX = projected[i][0];
+            int newY = projected[i][1];
+            tetrobots[i].setX(newX);
+            tetrobots[i].setY(newY);
+        }
+    }
+
 }
