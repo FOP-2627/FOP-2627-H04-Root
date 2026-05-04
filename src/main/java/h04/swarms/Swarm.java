@@ -1,14 +1,22 @@
-package h04;
+package h04.swarms;
 
 import fopbot.Direction;
+import h04.ProjectionMatrix;
+import h04.TetrisWorld;
+import h04.Tetrobot;
+import h04.Tetromino;
 
 public abstract class Swarm {
 
-    private Tetrobot[] tetrobots;
+    protected int x;
 
-    private ProjectionMatrix projectionMatrix;
+    protected int y;
 
-    private TetrisWorld tetrisWorld;
+    protected Tetrobot[] tetrobots;
+
+    protected ProjectionMatrix projectionMatrix;
+
+    protected Tetromino tetromino;
 
 //    public void move() {
 //        for (int i = 0; i < tetrobots.length; i++) {
@@ -36,5 +44,6 @@ public abstract class Swarm {
         return true;
     }
 
+    public abstract void spawn();
 
 }
