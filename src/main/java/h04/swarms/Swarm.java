@@ -1,6 +1,7 @@
 package h04.swarms;
 
 import fopbot.Direction;
+import fopbot.World;
 import h04.*;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
@@ -17,13 +18,33 @@ public abstract class Swarm {
 
     protected Tetromino tetromino;
 
-//    public void move() {
-//        for (int i = 0; i < tetrobots.length; i++) {
-//            tetrobots[i].move();
-//        }
-//    }
+    public int getX() {
+        return x;
+    }
 
-    public void move(Direction direction) {
+    public int getY() {
+        return y;
+    }
+
+    public ProjectionMatrix getProjectionMatrix() {
+        return projectionMatrix;
+    }
+
+    public Tetromino getTetromino() {
+        return tetromino;
+    }
+
+
+    /*
+     * Moves the swarm in the specified direction.
+     *
+     * @param direction the direction to move
+     * @throws IllegalArgumentException if the direction is not supported for swarm movement (e.g., UP)
+     */
+    public void move(Direction direction) throws IllegalArgumentException {
+        if (direction == Direction.UP)
+            throw new IllegalArgumentException("Direction UP is not supported for Swarm movement.");
+        
         for (int i = 0; i < tetrobots.length; i++) {
             while (!tetrobots[i].getDirection().equals(direction)) {
                 tetrobots[i].turnLeft();
