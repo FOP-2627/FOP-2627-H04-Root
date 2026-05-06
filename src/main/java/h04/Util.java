@@ -11,6 +11,10 @@ import java.util.List;
 @DoNotTouch
 public class Util {
 
+    public static boolean isWithinBounds(int x, int y) {
+        return x >= 0 && x < World.getWidth() && y >= 0 && y < World.getHeight();
+    }
+
     public static FieldEntity[] getEntitiesInFrontOf(Robot robot) {
 //        try {
 //            Class<?> robotClass = robot.getClass();
@@ -31,8 +35,15 @@ public class Util {
             Direction direction = robot.getDirection();
             int x = robot.getX() + direction.getDx();
             int y = robot.getY() + direction.getDy();
-            fopbot.Field field = world.getField(x, y);
-            return field.getEntities().toArray(new FieldEntity[0]);
+            fopbot.Field field = isWithinBounds(x, y) ? world.getField(x, y) : null;
+            return field != null ? field.getEntities().toArray(new FieldEntity[0]) : new FieldEntity[0];
+    }
+
+    
+    public static FieldEntity[] getEntitiesAt(int x, int y) {
+        KarelWorld world = World.getGlobalWorld();
+        fopbot.Field field = world.getField(x, y);
+        return field.getEntities().toArray(new FieldEntity[0]);
     }
 
     public static void removeEntity(FieldEntity entity, KarelWorld karelWorld) {
@@ -52,17 +63,7 @@ public class Util {
     }
 
     public static void removeRobot(Robot robot) {
-        try {
-            Class<?> robotClass = robot.getClass();
-            Field world = robotClass.getDeclaredField("world");
-            world.setAccessible(true);
-            KarelWorld karelWorld = (KarelWorld) world.get(robot);
-            world.setAccessible(false);
-
-            removeEntity(robot, karelWorld);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        removeEntity(robot, World.getGlobalWorld());
     }
 
     public static void sleep(int millis) {

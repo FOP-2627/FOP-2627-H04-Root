@@ -60,7 +60,9 @@ public class Tetrobot extends Robot {
 
     @Override
     public boolean isFrontClear() {
-        return true;
+        final int x = this.getX() + this.getDirection().getDx();
+        final int y = this.getY() + this.getDirection().getDy();
+        return Util.isWithinBounds(x, y);
     }
 
     //Alternative 2: ignored entities are passed as an argument
@@ -71,7 +73,7 @@ public class Tetrobot extends Robot {
                 return false;
             }
         }
-        return true;
+        return isFrontClear();
     }
 
     public void despawn() {

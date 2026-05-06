@@ -3,7 +3,7 @@ package h04;
 /**
  * Matrix-based projection for tetrominoes using SRS-style pivot rotation.
  */
-public class ProjectionMatrix {
+public class ProjectionMatrix implements Cloneable {
 
     private boolean[][] shape;
     private int pivotX2;
@@ -135,5 +135,16 @@ public class ProjectionMatrix {
         }
 
         return rotated;
+    }
+
+    @Override
+    public ProjectionMatrix clone() {
+        try {
+            ProjectionMatrix copy = (ProjectionMatrix) super.clone();
+            copy.shape = Tetromino.deepCopy(this.shape);
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
     }
 }

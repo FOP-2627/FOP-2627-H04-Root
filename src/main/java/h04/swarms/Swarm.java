@@ -30,6 +30,10 @@ public abstract class Swarm {
         return projectionMatrix;
     }
 
+    public void setProjectionMatrix(ProjectionMatrix projectionMatrix) {
+        this.projectionMatrix = projectionMatrix;
+    }
+
     public Tetromino getTetromino() {
         return tetromino;
     }
@@ -49,7 +53,7 @@ public abstract class Swarm {
     public void move(Direction direction) throws IllegalArgumentException {
         if (direction == Direction.UP)
             throw new IllegalArgumentException("Direction UP is not supported for Swarm movement.");
-        
+            
         for (int i = 0; i < tetrobots.length; i++) {
             while (!tetrobots[i].getDirection().equals(direction)) {
                 tetrobots[i].turnLeft();
@@ -71,6 +75,22 @@ public abstract class Swarm {
         return true;
     }
 
+    public boolean canMove(Direction direction) {
+        if (direction == Direction.UP)
+            return false;
+
+        for (int i = 0; i < tetrobots.length; i++) {
+            while (!tetrobots[i].getDirection().equals(direction)) {
+                tetrobots[i].turnLeft();
+            }
+            if (!tetrobots[i].isFrontClear(tetrobots)) {
+                return false;
+            }        
+        }
+
+        return true;
+    }
+
     public void spawn() {
         if (this.tetrobots != null) {
             for (int i = 0; i < tetrobots.length; i++) {
@@ -86,6 +106,16 @@ public abstract class Swarm {
         this.tetrobots = newTetrobots;
     }
 
+    public void commitSRSRotation() {
+        int[][] projected = projectionMatrix.projectToWorld(x, y);
+        for (int i = 0; i < tetrobots.length; i++) {
+            int newX = projected[i][0];
+            int newY = projected[i][1];
+            tetrobots[i].setX(newX);
+            tetrobots[i].setY(newY);
+        }
+    }
+    
     public void turnRight() {
         projectionMatrix.rotateRight();
         int[][] projected = projectionMatrix.projectToWorld(x, y);
@@ -107,5 +137,4 @@ public abstract class Swarm {
             tetrobots[i].setY(newY);
         }
     }
-
 }

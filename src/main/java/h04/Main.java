@@ -34,6 +34,9 @@ public class Main {
      * @param args program arguments, currently ignored
      */
     public static void main(String[] args) {
+
+        
+
         GameLoop gameLoop = new GameLoop();
         gameLoop.gameLoop();
 

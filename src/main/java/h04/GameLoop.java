@@ -1,43 +1,100 @@
 package h04;
 
 import fopbot.*;
-import h04.swarms.S;
-import h04.swarms.Swarm;
-import h04.swarms.TestSwarm;
+import h04.swarms.*;
 
+import java.sql.JDBCType;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class GameLoop {
 
-    private Swarm currentSwarm;
+    private TetrisWorld tetrisWorld;
+
+    protected void moveDownChecked() {
+        if (tetrisWorld.getActiveSwarm().canMove(Direction.DOWN)) {
+            tetrisWorld.getActiveSwarm().move(Direction.DOWN);
+        } else {
+            tetrisWorld.drop();
+        }
+    }
+
+    protected void moveLeftRightChecked(Direction direction) {
+        if (tetrisWorld.getActiveSwarm().canMove(direction)) {
+            tetrisWorld.getActiveSwarm().move(direction);
+        }
+    }
+
+    protected void rotateChecked(boolean clockwise) {
+        var projectionMatrix = tetrisWorld.getActiveSwarm().getProjectionMatrix().clone();
+        
+        if (clockwise) {
+            projectionMatrix.rotateRight();
+        } else {
+            projectionMatrix.rotateLeft();
+        }
+
+        if (tetrisWorld.canProject(projectionMatrix, tetrisWorld.getActiveSwarm().getX(), tetrisWorld.getActiveSwarm().getY())) {
+            tetrisWorld.getActiveSwarm().setProjectionMatrix(projectionMatrix);
+        }
+
+        tetrisWorld.getActiveSwarm().commitSRSRotation();
+    }
+
 
     public void handleInput(KeyPressEvent event) {
         switch (event.getKey()) {
-            case W -> currentSwarm.move(Direction.UP);
-            case A -> currentSwarm.move(Direction.LEFT);
-            case S -> currentSwarm.move(Direction.DOWN);
-            case D -> currentSwarm.move(Direction.RIGHT);
-            case LEFT -> currentSwarm.turnLeft();
-            case RIGHT -> currentSwarm.turnRight();
+            case A -> moveLeftRightChecked(Direction.LEFT);
+            case S -> moveDownChecked();
+            case D -> moveLeftRightChecked(Direction.RIGHT);
+            case LEFT -> rotateChecked(false);
+            case RIGHT -> rotateChecked(true);
+            case SPACE -> tetrisWorld.drop();
             default -> {}
         }
     }
 
     public void gameLoop() {
-        World.setSize(10, 10);
+        tetrisWorld = new TetrisWorld();
+        World.setSize(10, 20);
         World.setDelay(0);
         World.setVisible(true);
-        currentSwarm = new S(5, 5, false);
-        currentSwarm.spawn();
+
         List<KeyPressEvent> keyPressEvents = Collections.synchronizedList(new LinkedList<>());
         InputHandler inputHandler = InputHandler.getInputHandler();
         inputHandler.addKeyPressListener(keyPressEvents::add);
+
+        // time/clock object to track time since last automatic drop, to implement gravity
+        var lastDropTime = System.currentTimeMillis();
+        
         while (true) {
+            if (tetrisWorld.getActiveSwarm() == null) {
+                var randomTetromino = new Random().nextInt(7);
+                Swarm newSwarm = switch (randomTetromino) {
+                    case 0 -> new I(5, 5);
+                    case 1 -> new O(5, 5);
+                    case 2 -> new T(5, 5);
+                    case 3 -> new L(5, 5, false);
+                    case 4 -> new L(5, 5, true);
+                    case 5 -> new S(5, 5, false);
+                    case 6 -> new S(5, 5, true);
+                    default -> throw new IllegalStateException("Unexpected value: " + randomTetromino);
+                };
+                tetrisWorld.setActiveSwarm(newSwarm);
+                tetrisWorld.getActiveSwarm().spawn();
+            }
+
             if (!keyPressEvents.isEmpty()) {
                 handleInput(keyPressEvents.getFirst());
                 keyPressEvents.clear();
+            }
+
+            var newTime = System.currentTimeMillis();
+            if (newTime - lastDropTime >= 1000) {
+                moveDownChecked();
+                lastDropTime = newTime;
             }
         }
     }
