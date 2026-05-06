@@ -35,7 +35,7 @@ public class Main {
      */
     public static void main(String[] args) {
         GameLoop gameLoop = new GameLoop();
-        gameLoop.inputTest();
+        gameLoop.gameLoop();
 
 //        World.setSize(10, 10);
 //        World.setVisible(true);

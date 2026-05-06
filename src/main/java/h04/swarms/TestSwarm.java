@@ -35,4 +35,9 @@ public class TestSwarm extends Swarm{
     public boolean isFrontClear() {
         return tetrobots[0].isFrontClear(new FieldEntity[0]);
     }
+
+    @Override
+    public void spawn() {
+
+    }
 }
