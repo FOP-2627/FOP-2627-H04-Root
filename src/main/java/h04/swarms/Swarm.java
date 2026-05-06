@@ -37,6 +37,8 @@ public abstract class Swarm {
         for (int i = 0; i < tetrobots.length; i++) {
             tetrobots[i].move();
         }
+        x += direction.getDx();
+        y += direction.getDy();
     }
 
     public boolean isFrontClear() {

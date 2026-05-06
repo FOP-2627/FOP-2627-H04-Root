@@ -17,6 +17,8 @@ public class TestSwarm extends Swarm{
             tetrobots[0].turnLeft();
         }
         tetrobots[0].move();
+        x += direction.getDx();
+        y += direction.getDy();
     }
 
     @Override

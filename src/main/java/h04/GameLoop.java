@@ -27,7 +27,7 @@ public class GameLoop {
 
     public void gameLoop() {
         World.setSize(10, 10);
-        World.setDelay(100);
+        World.setDelay(0);
         World.setVisible(true);
         currentSwarm = new S(5, 5, false);
         currentSwarm.spawn();
@@ -60,13 +60,13 @@ public class GameLoop {
         World.setSize(10, 10);
         World.setDelay(100);
         World.setVisible(true);
-        Tetrobot testbot = new Tetrobot(5, 5);
+        Tetrobot testBot = new Tetrobot(5, 5);
         List<KeyPressEvent> keyPressEvents = Collections.synchronizedList(new LinkedList<>());
         InputHandler inputHandler = InputHandler.getInputHandler();
         inputHandler.addKeyPressListener(keyPressEvents::add);
         while (true) {
             if (!keyPressEvents.isEmpty()) {
-                handleTestInput(keyPressEvents.getFirst(), testbot);
+                handleTestInput(keyPressEvents.getFirst(), testBot);
                 keyPressEvents.clear();
             }
         }
