@@ -1,10 +1,5 @@
 package h04;
 
-import fopbot.Direction;
-import fopbot.World;
-import h04.swarms.S;
-import h04.swarms.Swarm;
-
 /**
  * Main entry point in executing the program.
  */
@@ -40,7 +35,7 @@ public class Main {
      */
     public static void main(String[] args) {
         GameLoop gameLoop = new GameLoop();
-        gameLoop.doGame();
+        gameLoop.inputTest();
 
 //        World.setSize(10, 10);
 //        World.setVisible(true);

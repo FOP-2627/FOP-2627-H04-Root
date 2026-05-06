@@ -23,6 +23,11 @@ public abstract class Swarm {
 //        }
 //    }
 
+    public Swarm (int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void move(Direction direction) {
         for (int i = 0; i < tetrobots.length; i++) {
             while (!tetrobots[i].getDirection().equals(direction)) {

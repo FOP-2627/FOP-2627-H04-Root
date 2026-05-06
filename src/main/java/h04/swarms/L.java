@@ -6,8 +6,7 @@ import h04.Tetromino;
 public class L extends Swarm{
 
     public L(int x, int y, boolean mirrored) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.tetromino = mirrored ? Tetromino.J : Tetromino.L;
         this.projectionMatrix = new ProjectionMatrix(this.tetromino);
     }

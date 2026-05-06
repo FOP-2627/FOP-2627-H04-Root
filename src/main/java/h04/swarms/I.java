@@ -6,8 +6,7 @@ import h04.Tetromino;
 public class I extends Swarm{
 
     public I(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.tetromino = Tetromino.I;
         this.projectionMatrix = new ProjectionMatrix(Tetromino.I);
     }

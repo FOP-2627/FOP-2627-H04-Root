@@ -3,13 +3,12 @@ package h04;
 import fopbot.*;
 
 import java.util.Collections;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
 public class GameLoop {
 
-    public void handleInput(KeyPressEvent event, Robot robot) {
+    public void handleTestInput(KeyPressEvent event, Robot robot) {
         Direction direction = switch (event.getKey()) {
             case UP -> Direction.UP;
             case DOWN -> Direction.DOWN;
@@ -23,7 +22,7 @@ public class GameLoop {
         robot.move();
     }
 
-    public void doGame() {
+    public void inputTest() {
         World.setSize(10, 10);
         World.setDelay(100);
         World.setVisible(true);
@@ -33,7 +32,7 @@ public class GameLoop {
         inputHandler.addKeyPressListener(keyPressEvents::add);
         while (true) {
             if (!keyPressEvents.isEmpty()) {
-                handleInput(keyPressEvents.getFirst(), testbot);
+                handleTestInput(keyPressEvents.getFirst(), testbot);
                 keyPressEvents.clear();
             }
         }

@@ -10,8 +10,7 @@ import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 public class S extends Swarm {
 
     public S(int x, int y, boolean mirrored) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.tetromino = mirrored ? Tetromino.Z : Tetromino.S;
         this.projectionMatrix = new ProjectionMatrix(this.tetromino);
     }
