@@ -5,60 +5,101 @@ import fopbot.World;
 import h04.*;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
+/**
+ * Represents a swarm of {@link Tetrobot}s that forms a tetromino in the Tetris
+ * world.
+ *
+ * <p>
+ * The swarm position corresponds to the bottom-left corner of the tetromino
+ * shape.
+ * The swarm can move left, right, and down, and it can rotate left and right.
+ * The arrangement of the robots is defined by the associated
+ * {@link ProjectionMatrix}.
+ * </p>
+ */
 public abstract class Swarm {
 
+    /**
+     * The x-coordinate of the bottom-left corner of the swarm in the Tetris world.
+     */
     @DoNotTouch
     protected int x;
 
+    /**
+     * The y-coordinate of the bottom-left corner of the swarm in the Tetris world.
+     */
     @DoNotTouch
     protected int y;
 
+    /**
+     * The robots that make up the swarm.
+     */
     protected Tetrobot[] tetrobots;
 
+    /**
+     * The projection matrix that defines the swarm shape.
+     */
     @DoNotTouch
     protected ProjectionMatrix projectionMatrix;
 
-//    @DoNotTouch
-//    protected Tetromino tetromino;
-
+    /**
+     * Returns the x-coordinate of the swarm position.
+     *
+     * @return the x-coordinate of the swarm position
+     */
     @DoNotTouch
     public int getX() {
         return x;
     }
 
+    /**
+     * Returns the y-coordinate of the swarm position.
+     *
+     * @return the y-coordinate of the swarm position
+     */
     @DoNotTouch
     public int getY() {
         return y;
     }
 
+    /**
+     * Returns the projection matrix associated with this swarm.
+     *
+     * @return the projection matrix of this swarm
+     */
     @DoNotTouch
     public ProjectionMatrix getProjectionMatrix() {
         return projectionMatrix;
     }
 
+    /**
+     * Sets the projection matrix for this swarm.
+     *
+     * @param projectionMatrix the projection matrix to set
+     */
     @DoNotTouch
     public void setProjectionMatrix(ProjectionMatrix projectionMatrix) {
         this.projectionMatrix = projectionMatrix;
     }
 
-//    @DoNotTouch
-//    public Tetromino getTetromino() {
-//        return tetromino;
-//    }
-
-
-    /*
-     * Moves the swarm in the specified direction.
+    /**
+     * Constructs a new swarm at the specified position.
      *
-     * @param direction the direction to move
-     * @throws IllegalArgumentException if the direction is not supported for swarm movement (e.g., UP)
+     * @param x the x-coordinate of the swarm
+     * @param y the y-coordinate of the swarm
      */
     @DoNotTouch
-    public Swarm (int x, int y) {
+    public Swarm(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Moves the swarm in the specified direction.
+     *
+     * @param direction the direction to move
+     * @throws IllegalArgumentException if {@code direction} is {@link Direction#UP}
+     */
     @DoNotTouch
     public void move(Direction direction) throws IllegalArgumentException {
         if (direction == Direction.UP)
@@ -76,16 +117,29 @@ public abstract class Swarm {
         y += direction.getDy();
     }
 
-    @DoNotTouch
-    public boolean isFrontClear() {
-        for (int i = 0; i < tetrobots.length; i++) {
-            if (!tetrobots[i].isFrontClear(tetrobots)) {
-                return false;
-            }
-        }
-        return true;
-    }
+    /**
+     * Checks whether the front of the swarm is clear.
+     *
+     * @return {@code true} if the front is clear for all robots in the swarm,
+     *         otherwise {@code false}
+     */
+    // @DoNotTouch
+    // public boolean isFrontClear() {
+    // for (int i = 0; i < tetrobots.length; i++) {
+    // if (!tetrobots[i].isFrontClear(tetrobots)) {
+    // return false;
+    // }
+    // }
+    // return true;
+    // }
 
+    /**
+     * Checks whether the swarm can move in the specified direction.
+     *
+     * @param direction the direction to check for movement
+     * @return {@code true} if the swarm can move in the specified direction,
+     *         otherwise {@code false}
+     */
     @DoNotTouch
     public boolean canMove(Direction direction) {
         if (direction == Direction.UP)
@@ -103,6 +157,9 @@ public abstract class Swarm {
         return true;
     }
 
+    /**
+     * Spawns the swarm in the Tetris world.
+     */
     @DoNotTouch
     public void spawn() {
         if (this.tetrobots != null) {
@@ -119,6 +176,9 @@ public abstract class Swarm {
         this.tetrobots = newTetrobots;
     }
 
+    /**
+     * Commits the current SRS rotation to the robots in the world.
+     */
     @DoNotTouch
     public void commitSRSRotation() {
         int[][] projected = projectionMatrix.projectToWorld(x, y);
@@ -130,12 +190,18 @@ public abstract class Swarm {
         }
     }
 
+    /**
+     * Rotates the swarm 90 degrees clockwise.
+     */
     @DoNotTouch
     public void turnRight() {
         projectionMatrix.rotateRight();
         commitSRSRotation();
     }
 
+    /**
+     * Rotates the swarm 90 degrees counterclockwise.
+     */
     @DoNotTouch
     public void turnLeft() {
         projectionMatrix.rotateLeft();

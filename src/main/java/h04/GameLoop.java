@@ -147,7 +147,7 @@ public class GameLoop {
             }
 
             if (action) {
-                tetrisWorld.debugPrint2();
+                // tetrisWorld.debugPrint2();
                 tetrisWorld.clearRows();
                 action = false;
             }
