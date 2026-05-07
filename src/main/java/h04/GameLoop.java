@@ -76,7 +76,7 @@ public class GameLoop {
                 var randomTetromino = new Random().nextInt(7);
                 Swarm newSwarm = switch (randomTetromino) {
                     case 0 -> new I(4, 16);
-                    case 1 -> new O(4, 16);
+                    case 1 -> new O(4, 18);
                     case 2 -> new T(4, 17);
                     case 3 -> new L(4, 17, false);
                     case 4 -> new L(4, 17, true);
