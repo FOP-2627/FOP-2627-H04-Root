@@ -107,7 +107,7 @@ public abstract class Swarm {
     public void spawn() {
         if (this.tetrobots != null) {
             for (int i = 0; i < tetrobots.length; i++) {
-                Util.removeRobot(tetrobots[i]);
+                Utils.removeRobot(tetrobots[i]);
             }
         }
 

@@ -1,57 +1,63 @@
 package h04;
 
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+
 /**
- * Matrix-based projection for tetrominoes using SRS-style pivot rotation.
+ * A matrix-based projection for tetrominoes with SRS-style pivot rotation.
  */
 public class ProjectionMatrix implements Cloneable {
 
+    /**
+     * The shape of the projection matrix.
+     * A value of {@code true} indicates a block, and {@code false} indicates empty space.
+     */
+    @DoNotTouch
     private boolean[][] shape;
+
+    /**
+     * The pivot X coordinate multiplied by 2.
+     */
+    @DoNotTouch
     private int pivotX2;
+    
+    /**
+     * The pivot Y coordinate multiplied by 2.
+     */
+    @DoNotTouch
     private int pivotY2;
 
+    /**
+     * Creates a projection matrix from the given tetromino template.
+     *
+     * @param tetromino the tetromino template to create the projection matrix from
+     */
     public ProjectionMatrix(Tetromino tetromino) {
         this.shape = tetromino.shape;
         this.pivotX2 = tetromino.getPivotX2();
         this.pivotY2 = tetromino.getPivotY2();
     }
 
-//    public ProjectionMatrix(TemplateData templateData) {
-//        applyTemplateData(templateData);
-//    }
-
-    public ProjectionMatrix(boolean[][] shape) {
-        this(shape, false);
-    }
-
-    public ProjectionMatrix(boolean[][] shape, boolean mirror) {
-        Tetromino.validateMatrix(shape);
-        this.shape = Tetromino.deepCopy(shape);
-        this.pivotX2 = shape[0].length - 1;
-        this.pivotY2 = shape.length - 1;
-        if (mirror) {
-            mirrorHorizontally();
-        }
-    }
-
+    /**
+     * Rotates the projection matrix 90 degrees clockwise around its pivot point.
+     */
     public void rotateRight() {
         shape = rotateAroundPivot(true);
     }
 
+    /**
+     * Rotates the projection matrix 90 degrees counterclockwise around its pivot point.
+     */
     public void rotateLeft() {
         shape = rotateAroundPivot(false);
     }
 
-    public void mirrorHorizontally() {
-        for (int y = 0; y < shape.length; y++) {
-            for (int left = 0, right = shape[y].length - 1; left < right; left++, right--) {
-                boolean tmp = shape[y][left];
-                shape[y][left] = shape[y][right];
-                shape[y][right] = tmp;
-            }
-        }
-        pivotX2 = 2 * (shape[0].length - 1) - pivotX2;
-    }
-
+    /**
+     * Projects the local matrix coordinates into world coordinates.
+     *
+     * @param worldX the world X coordinate of the matrix's bottom-left corner
+     * @param worldY the world Y coordinate of the matrix's bottom-left corner
+     * @return the projected world coordinates for each occupied cell, as {@code [x, y]} pairs
+     */
     public int[][] projectToWorld(int worldX, int worldY) {
         int count = 0;
         for (int y = 0; y < shape.length; y++) {
@@ -76,24 +82,39 @@ public class ProjectionMatrix implements Cloneable {
         return projected;
     }
 
+    /**
+     * Returns a deep copy of the matrix shape.
+     *
+     * @return a deep copy of the shape array
+     */
     public boolean[][] getShape() {
         return Tetromino.deepCopy(shape);
     }
 
+    /**
+     * Returns the pivot X coordinate multiplied by 2.
+     *
+     * @return the pivot X coordinate multiplied by 2
+     */
     public int getPivotX2() {
         return pivotX2;
     }
 
+    /**
+     * Returns the pivot Y coordinate multiplied by 2.
+     *
+     * @return the pivot Y coordinate multiplied by 2
+     */
     public int getPivotY2() {
         return pivotY2;
     }
 
-//    private void applyTemplateData(TemplateData data) {
-//        this.shape = data.getShape();
-//        this.pivotX2 = data.getPivotX2();
-//        this.pivotY2 = data.getPivotY2();
-//    }
-
+    /**
+     * Rotates the projection matrix 90 degrees around its pivot point.
+     *
+     * @param clockwise if true, rotates the matrix 90 degrees to the right (clockwise); if false, rotates 90 degrees to the left (counterclockwise)
+     * @return a new projection matrix with the rotated shape
+     */
     private boolean[][] rotateAroundPivot(boolean clockwise) {
         boolean[][] rotated = new boolean[shape.length][shape[0].length];
 
@@ -137,6 +158,11 @@ public class ProjectionMatrix implements Cloneable {
         return rotated;
     }
 
+    /**
+     * Returns a deep copy of this projection matrix.
+     *
+     * @return a deep copy of this projection matrix
+     */
     @Override
     public ProjectionMatrix clone() {
         try {

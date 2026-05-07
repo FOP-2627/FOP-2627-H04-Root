@@ -4,7 +4,7 @@ import fopbot.RobotFamily;
 import h04.ProjectionMatrix;
 import h04.Tetrobot;
 import h04.Tetromino;
-import h04.Util;
+import h04.Utils;
 import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 
 @StudentCreationRequired

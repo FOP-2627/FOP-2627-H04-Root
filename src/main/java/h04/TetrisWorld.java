@@ -8,18 +8,35 @@ import fopbot.World;
 import h04.swarms.Swarm;
 
 /**
- * Logical Tetris board with standard dimensions (10x20).
+ * Logical Tetris board with the standard dimensions of 10 by 20.
  *
  * The board stores fixed tetromino cells and keeps at most one active swarm.
  */
 public class TetrisWorld {
 
+	/**
+	 * The width of the Tetris board.
+	 */
 	public static final int WIDTH = 10;
+
+	/**
+	 * The height of the Tetris board.
+	 */
 	public static final int HEIGHT = 20;
 
+	/**
+	 * The state of each cell in the Tetris world.
+	 */
 	private final TetrisWorldState[][] cells;
+
+	/**
+	 * The active swarm on the Tetris board.
+	 */
 	private Swarm activeSwarm;
 
+	/**
+	 * Creates a new Tetris world with the standard dimensions.
+	 */
 	public TetrisWorld() {
 		this.cells = new TetrisWorldState[HEIGHT][WIDTH];
 		for (int y = 0; y < HEIGHT; y++) {
@@ -29,6 +46,9 @@ public class TetrisWorld {
 		}
 	}
 
+	/**
+	 * Clears the Tetris world by removing all fixed bots.
+	 */
 	public void clear() {
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
@@ -37,35 +57,65 @@ public class TetrisWorld {
 		}
 	}
 
+	// ugly shit, maybe useful for test developers, remove from student template
+	// TODO: REMOVE
 	// public void captureWorldSnapshot() {
-	// 	KarelWorld world = World.getGlobalWorld();
-	// 	for (int y = 0; y < HEIGHT; y++) {
-	// 		for (int x = 0; x < WIDTH; x++) {
-	// 			fopbot.Field field = world.getField(x, y);
-	// 			cells[y][x] = TetrisWorldState.UNDEFINED;
-	// 			for (FieldEntity entity : field.getEntities()) {
-	// 				if (entity instanceof Tetrobot) {
-	// 					cells[y][x] = TetrisWorldState.FIXED_BOT;
-	// 					break;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
+	// KarelWorld world = World.getGlobalWorld();
+	// for (int y = 0; y < HEIGHT; y++) {
+	// for (int x = 0; x < WIDTH; x++) {
+	// fopbot.Field field = world.getField(x, y);
+	// cells[y][x] = TetrisWorldState.UNDEFINED;
+	// for (FieldEntity entity : field.getEntities()) {
+	// if (entity instanceof Tetrobot) {
+	// cells[y][x] = TetrisWorldState.FIXED_BOT;
+	// break;
+	// }
+	// }
+	// }
+	// }
 	// }
 
+	/**
+	 * Sets the active swarm on the Tetris board.
+	 * 
+	 * @param swarm the swarm to set as active
+	 */
 	public void setActiveSwarm(Swarm swarm) {
 		this.activeSwarm = swarm;
 	}
 
+	/**
+	 * Returns the currently active swarm.
+	 * 
+	 * @return the active swarm, or {@code null} if there is no active swarm
+	 */
 	public Swarm getActiveSwarm() {
 		return activeSwarm;
 	}
-	
 
+	/**
+	 * Clears the active swarm from the Tetris board.
+	 */
 	public void clearActiveSwarm() {
 		this.activeSwarm = null;
 	}
 
+	/**
+	 * Checks whether the given projection matrix can be placed at the specified
+	 * world coordinates.
+	 *
+	 * <p>
+	 * The projection must stay within the board and must not overlap any fixed
+	 * bots.
+	 * </p>
+	 *
+	 * @param projectionMatrix the projection matrix to check
+	 * @param worldX           the world x-coordinate where the projection should be
+	 *                         placed
+	 * @param worldY           the world y-coordinate where the projection should be
+	 *                         placed
+	 * @return {@code true} if the projection can be placed, otherwise {@code false}
+	 */
 	public boolean canProject(ProjectionMatrix projectionMatrix, int worldX, int worldY) {
 		int[][] points = projectionMatrix.projectToWorld(worldX, worldY);
 		for (int[] point : points) {
@@ -82,19 +132,27 @@ public class TetrisWorld {
 		return true;
 	}
 
+	/**
+	 * Checks whether the given swarm can be placed at its current coordinates.
+	 *
+	 * <p>
+	 * The swarm must stay within the board and must not overlap any fixed bots.
+	 * </p>
+	 *
+	 * @param swarm the swarm to check
+	 * @return {@code true} if the swarm can be placed, otherwise {@code false}
+	 */
 	public boolean canProject(Swarm swarm) {
 		return swarm != null && canProject(swarm.getProjectionMatrix(), swarm.getX(), swarm.getY());
 	}
 
-	public boolean project() {
-		return fixActiveSwarm();
-	}
-
-	public boolean project(Swarm swarm) {
-		setActiveSwarm(swarm);
-		return fixActiveSwarm();
-	}
-
+	/**
+	 * Fixes the active swarm in place on the Tetris board if it can be projected at
+	 * its current coordinates.
+	 *
+	 * @return {@code true} if the active swarm was fixed in place, otherwise
+	 *         {@code false}
+	 */
 	public boolean fixActiveSwarm() {
 		if (activeSwarm == null || !canProject(activeSwarm)) {
 			return false;
@@ -108,13 +166,21 @@ public class TetrisWorld {
 		return true;
 	}
 
-	public boolean getCell(int x, int y) {
-		if (!isInside(x, y)) {
-			throw new IllegalArgumentException("Coordinates out of bounds: (" + x + ", " + y + ")");
-		}
-		return cells[y][x] == TetrisWorldState.FIXED_BOT;
-	}
-
+	/**
+	 * Prints the current state of the Tetris world to the console.
+	 *
+	 * <p>
+	 * Fixed bots are printed as {@code X}, the active swarm's projection footprint
+	 * as {@code #},
+	 * and empty cells as {@code .}.
+	 * </p>
+	 * 
+	 * <p>
+	 * TODO: REMOVE FROM STUDENT TEMPLATE ONLY IF REVIEW FINDS THIS NOT USEFUL OR
+	 * TOO USEFUL
+	 * KEEP FOR TEST DEVELOPERS
+	 * </p>
+	 */
 	public void debugPrint2() {
 		System.out.println("=== TetrisWorld ===");
 		int[][] points = null;
@@ -152,10 +218,22 @@ public class TetrisWorld {
 		System.out.println();
 	}
 
+	/**
+	 * Checks whether the given coordinates are within the bounds of the Tetris
+	 * board.
+	 *
+	 * @param x the x-coordinate to check
+	 * @param y the y-coordinate to check
+	 * @return {@code true} if the coordinates are within bounds, otherwise
+	 *         {@code false}
+	 */
 	private static boolean isInside(int x, int y) {
 		return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
 	}
 
+	/**
+	 * Moves the active swarm down if possible, or drops it into place otherwise.
+	 */
 	public void drop() {
 		while (activeSwarm != null && activeSwarm.canMove(Direction.DOWN)) {
 			activeSwarm.move(Direction.DOWN);
@@ -164,6 +242,9 @@ public class TetrisWorld {
 		clearActiveSwarm();
 	}
 
+	/**
+	 * Clears any full rows from the Tetris board and shifts rows above them down.
+	 */
 	public void clearRows() {
 		for (int y = 0; y < HEIGHT; y++) {
 			if (!isFullRow(y)) {
@@ -176,6 +257,12 @@ public class TetrisWorld {
 		}
 	}
 
+	/**
+	 * Checks whether the specified row is full.
+	 *
+	 * @param y the index of the row to check
+	 * @return {@code true} if the row is full, otherwise {@code false}
+	 */
 	private boolean isFullRow(int y) {
 		for (int x = 0; x < WIDTH; x++) {
 			if (cells[y][x] != TetrisWorldState.FIXED_BOT) {
@@ -185,24 +272,34 @@ public class TetrisWorld {
 		return true;
 	}
 
+	/**
+	 * Clears all entities from the specified row and marks the cells as undefined.
+	 *
+	 * @param y the index of the row to clear
+	 */
 	private void clearRowEntities(int y) {
 		for (int x = 0; x < WIDTH; x++) {
 			cells[y][x] = TetrisWorldState.UNDEFINED;
-			for (FieldEntity entity : Util.getEntitiesAt(x, y)) {
+			for (FieldEntity entity : Utils.getEntitiesAt(x, y)) {
 				if (entity instanceof Tetrobot) {
-					Util.removeEntity(entity, World.getGlobalWorld());
+					Utils.removeEntity(entity, World.getGlobalWorld());
 				}
 			}
 		}
 	}
 
+	/**
+	 * Shifts all rows starting from the specified source row down by one.
+	 *
+	 * @param sourceY the index of the first row above the cleared row
+	 */
 	private void shiftRowsDownFrom(int sourceY) {
 		for (int readY = sourceY; readY < HEIGHT; readY++) {
 			int targetY = readY - 1;
 			for (int x = 0; x < WIDTH; x++) {
 				cells[targetY][x] = cells[readY][x];
 				cells[readY][x] = TetrisWorldState.UNDEFINED;
-				for (FieldEntity entity : Util.getEntitiesAt(x, readY)) {
+				for (FieldEntity entity : Utils.getEntitiesAt(x, readY)) {
 					if (entity instanceof Tetrobot) {
 						((Tetrobot) entity).setY(targetY);
 					}
@@ -210,5 +307,4 @@ public class TetrisWorld {
 			}
 		}
 	}
-
 }

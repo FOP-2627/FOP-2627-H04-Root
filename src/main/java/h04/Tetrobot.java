@@ -7,34 +7,23 @@ import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 @StudentCreationRequired
 public class Tetrobot extends Robot {
 
-//    //Alternative 1: ignored entities are kept as an attribute
-//    FieldEntity[] ignoredEntities;
-
+    /**
+     * Creates a new Tetrobot at the specified coordinates.
+     *
+     * @param x the X coordinate of the Tetrobot
+     * @param y the Y coordinate of the Tetrobot
+     */
     public Tetrobot(int x, int y) {
         super(x, y);
     }
 
-//    public Tetrobot(int x, int y, FieldEntity[] ignoredEntities) {
-//        super(x, y);
-//        this.ignoredEntities = ignoredEntities;
-//    }
-
-//    //Alternative 1: ignored entities are kept as an attribute
-//    public void ignoreEntity(FieldEntity entity) {
-//        int ignoredAmount = this.ignoredEntities.length;
-//        FieldEntity[] ignoredEntities = new FieldEntity[ignoredAmount + 1];
-//        for (int i = 0; i < ignoredAmount; i++) {
-//            ignoredEntities[i] = this.ignoredEntities[i];
-//        }
-//        ignoredEntities[ignoredAmount + 1] = entity;
-//        this.ignoredEntities = ignoredEntities;
-//    }
-
-//    //Alternative 1: ignored entities are kept as an attribute
-//    public void unignoreEntity(FieldEntity entity) {
-//        throw new UnsupportedOperationException();
-//    }
-
+    /**
+     * Checks whether the given entity is contained in the array of entities.
+     *
+     * @param entities the array of entities to search in
+     * @param entity the entity to search for
+     * @return {@code true} if the entity is found, otherwise {@code false}
+     */
     private boolean containsEntity(FieldEntity[] entities, FieldEntity entity) {
         if (entities == null) {
             return false;
@@ -47,27 +36,26 @@ public class Tetrobot extends Robot {
         return false;
     }
 
-//    //Alternative 1: ignored entities are kept as an attribute
-//    public boolean isFrontClear() {
-//        FieldEntity[] entitiesInFront = Util.getEntitiesInFrontOf(this);
-//        for (int i = 0; i < entitiesInFront.length; i++) {
-//            if (!(containsEntity(this.ignoredEntities, entitiesInFront[i]))) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
+    /**
+        * Checks whether the front of the Tetrobot is clear while respecting the world boundaries.
+        *
+        * @return {@code true} if the front is clear, otherwise {@code false}
+     */
     @Override
     public boolean isFrontClear() {
         final int x = this.getX() + this.getDirection().getDx();
         final int y = this.getY() + this.getDirection().getDy();
-        return Util.isWithinBounds(x, y);
+        return Utils.isWithinBounds(x, y);
     }
 
-    //Alternative 2: ignored entities are passed as an argument
+    /**
+     * Checks whether the front of the Tetrobot is clear while ignoring the specified entities.
+     *
+     * @param ignoredEntities the entities to ignore
+     * @return {@code true} if the front is clear, otherwise {@code false}
+     */
     public boolean isFrontClear(FieldEntity[] ignoredEntities) {
-        FieldEntity[] entitiesInFront = Util.getEntitiesInFrontOf(this);
+        FieldEntity[] entitiesInFront = Utils.getEntitiesInFrontOf(this);
         for (int i = 0; i < entitiesInFront.length; i++) {
             if (!(containsEntity(ignoredEntities, entitiesInFront[i]))) {
                 return false;
@@ -76,8 +64,11 @@ public class Tetrobot extends Robot {
         return isFrontClear();
     }
 
+    /**
+     * Removes the Tetrobot from the world.
+     */
     public void despawn() {
         this.turnOff();
-        Util.removeRobot(this);
+        Utils.removeRobot(this);
     }
 }

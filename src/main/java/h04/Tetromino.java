@@ -1,10 +1,10 @@
 package h04;
 
-/* 
- * The fopbot world has bottom left origin, so does our memory representation, however this means that
- * visual in the editor the bottom row of the shape is the first row of the matrix, which is a bit counterintuitive.
+/**
+ * Represents the seven standard tetromino shapes used in Tetris.
+ *
+ * <p>Each tetromino is defined by a 2D boolean array for its shape and a pivot point for rotation.</p>
  */
-
 public enum Tetromino {
 
     I(new boolean[][] {
@@ -36,32 +36,84 @@ public enum Tetromino {
             { false, true, true },
             { true, true, false } }, 2, 2);
 
+    /**
+     * The shape of the tetromino.
+     *
+     * <p>{@code true} indicates an occupied cell and {@code false} indicates empty space.
+     * The first dimension represents rows and the second dimension represents columns.
+     * Index {@code 0} in the row dimension corresponds to the bottom row of the shape.
+     * This matches the bottom-left origin used by the FOPBot world.</p>
+     */
     public final boolean[][] shape;
+
+    /**
+     * The X coordinate of the pivot point for rotation, multiplied by 2.
+     */
     private final int pivotX2;
+
+    /**
+     * The Y coordinate of the pivot point for rotation, multiplied by 2.
+     */
     private final int pivotY2;
 
+    /**
+     * Constructs a new Tetromino with the specified shape and pivot point.
+     *
+     * @param shape the 2D boolean array representing the shape of the tetromino
+     * @param pivotX2 the X coordinate of the pivot point multiplied by 2
+     * @param pivotY2 the Y coordinate of the pivot point multiplied by 2
+     */
     Tetromino(boolean[][] shape, int pivotX2, int pivotY2) {
         this.shape = shape;
         this.pivotX2 = pivotX2;
         this.pivotY2 = pivotY2;
     }
 
+    /**
+     * Returns a deep copy of the shape matrix.
+     *
+     * @return a deep copy of the shape matrix
+     */
     public boolean[][] getShape() {
         return deepCopy(shape);
     }
 
+    /**
+     * Returns the X coordinate of the pivot point for rotation, multiplied by 2.
+     *
+     * @return the X coordinate of the pivot point multiplied by 2
+     */
     public int getPivotX2() {
         return pivotX2;
     }
 
+    /**
+     * Returns the Y coordinate of the pivot point for rotation, multiplied by 2.
+     *
+     * @return the Y coordinate of the pivot point multiplied by 2
+     */
     public int getPivotY2() {
         return pivotY2;
     }
 
+    /**
+     * Returns the mirrored version of this tetromino.
+     *
+     * <p>The I and O tetrominoes are symmetric and therefore return themselves.
+     * The L and J tetrominoes are mirrored versions of each other, as are the S and Z tetrominoes.</p>
+     *
+     * @return the mirrored tetromino
+     */
     public Tetromino mirrored() {
         return this == L ? J : this == J ? L : this == S ? Z : this == Z ? S : this;
     }
 
+    /**
+     * Creates a deep copy of the given 2D boolean array.
+     *
+     * @param matrix the 2D boolean array to copy
+     * @return a deep copy of the given matrix
+     */
     static boolean[][] deepCopy(boolean[][] matrix) {
         boolean[][] copy = new boolean[matrix.length][];
         for (int i = 0; i < matrix.length; i++) {
@@ -69,18 +121,4 @@ public enum Tetromino {
         }
         return copy;
     }
-
-    static void validateMatrix(boolean[][] matrix) {
-        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
-            throw new IllegalArgumentException("Shape matrix must not be empty");
-        }
-
-        int width = matrix[0].length;
-        for (int i = 1; i < matrix.length; i++) {
-            if (matrix[i] == null || matrix[i].length != width) {
-                throw new IllegalArgumentException("Shape matrix must be rectangular");
-            }
-        }
-    }
-
 }
