@@ -20,13 +20,13 @@ public enum Tetromino {
             { true, true, true },
             { false, true, false } }, 2, 2),
     L(new boolean[][] {
-            { false, true, true },
-            { false, true, false },
-            { false, true, false } }, 2, 2),
+            { false, false, false },
+            { true, true, true },
+            { true, false, false } }, 2, 2),
     J(new boolean[][] {
-            { true, true, false },
-            { false, true, false },
-            { false, true, false } }, 2, 2),
+            { false, false, false },
+            { true, true, true },
+            { false, false, true } }, 2, 2),
     S(new boolean[][] {
             { false, false, false },
             { true, true, false },
