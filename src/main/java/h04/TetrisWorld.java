@@ -115,17 +115,36 @@ public class TetrisWorld {
 		return cells[y][x] == TetrisWorldState.FIXED_BOT;
 	}
 
-	public void debugPrint(String label) {
-		String title = (label == null || label.isBlank())
-				? "TetrisWorld"
-				: "TetrisWorld - " + label;
-
-		System.out.println("=== " + title + " ===");
-		for (int y = 0; y < HEIGHT; y++) {
+	public void debugPrint2() {
+		System.out.println("=== TetrisWorld ===");
+		int[][] points = null;
+		int minX = 0;
+		int minY = 0;
+		int maxX = -1;
+		int maxY = -1;
+		if (activeSwarm != null) {
+			ProjectionMatrix projectionMatrix = activeSwarm.getProjectionMatrix();
+			boolean[][] shape = projectionMatrix.getShape();
+			points = projectionMatrix.projectToWorld(activeSwarm.getX(), activeSwarm.getY());
+			minX = activeSwarm.getX();
+			minY = activeSwarm.getY();
+			maxX = minX + shape[0].length - 1;
+			maxY = minY + shape.length - 1;
+		}
+		for (int displayY = HEIGHT - 1; displayY >= 0; displayY--) {
 			StringBuilder line = new StringBuilder("| ");
 			for (int x = 0; x < WIDTH; x++) {
-				TetrisWorldState value = cells[y][x];
-				line.append(value == TetrisWorldState.FIXED_BOT ? "X " : ". ");
+				boolean occupied = cells[displayY][x] == TetrisWorldState.FIXED_BOT;
+				if (points != null) {
+					for (int[] point : points) {
+						if (point[0] == x && point[1] == displayY) {
+							occupied = true;
+							break;
+						}
+					}
+				}
+				boolean insideBounds = points != null && x >= minX && x <= maxX && displayY >= minY && displayY <= maxY;
+				line.append(occupied ? "X " : insideBounds ? "# " : ". ");
 			}
 			line.append("|");
 			System.out.println(line);
@@ -145,43 +164,49 @@ public class TetrisWorld {
 		clearActiveSwarm();
 	}
 
-	protected void copyDownEntitiesAtRowAndAbove(int y) {
-		for (int copyY = y; copyY >= 0; copyY--) {
-			for (int x = 0; x < WIDTH; x++) {
-				cells[copyY + 1][x] = cells[copyY][x];
-				cells[copyY][x] = TetrisWorldState.UNDEFINED;
+	public void clearRows() {
+		for (int y = 0; y < HEIGHT; y++) {
+			if (!isFullRow(y)) {
+				continue;
 			}
-			for (int x = 0; x < WIDTH; x++) {
-				for (FieldEntity entity : Util.getEntitiesAt(x, copyY)) {
-					if (entity instanceof Tetrobot) {
-						((Tetrobot) entity).setY(copyY + 1);
-					}
+
+			clearRowEntities(y);
+			shiftRowsDownFrom(y + 1);
+			y--; // Recheck the same row after shifting rows above it down.
+		}
+	}
+
+	private boolean isFullRow(int y) {
+		for (int x = 0; x < WIDTH; x++) {
+			if (cells[y][x] != TetrisWorldState.FIXED_BOT) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void clearRowEntities(int y) {
+		for (int x = 0; x < WIDTH; x++) {
+			cells[y][x] = TetrisWorldState.UNDEFINED;
+			for (FieldEntity entity : Util.getEntitiesAt(x, y)) {
+				if (entity instanceof Tetrobot) {
+					Util.removeEntity(entity, World.getGlobalWorld());
 				}
 			}
 		}
 	}
 
-	public void clearRows() {
-		for (int y = HEIGHT - 1; y >= 0; y--) {
-			boolean fullRow = true;
+	private void shiftRowsDownFrom(int sourceY) {
+		for (int readY = sourceY; readY < HEIGHT; readY++) {
+			int targetY = readY - 1;
 			for (int x = 0; x < WIDTH; x++) {
-				if (cells[y][x] != TetrisWorldState.FIXED_BOT) {
-					fullRow = false;
-					break;
-				}
-			}
-			if (fullRow) {
-				for (int x = 0; x < WIDTH; x++) {
-					cells[y][x] = TetrisWorldState.UNDEFINED;
-					for (FieldEntity entity : Util.getEntitiesAt(x, y)) {
-						if (entity instanceof Tetrobot) {
-							Util.removeEntity(entity, World.getGlobalWorld());
-						}
+				cells[targetY][x] = cells[readY][x];
+				cells[readY][x] = TetrisWorldState.UNDEFINED;
+				for (FieldEntity entity : Util.getEntitiesAt(x, readY)) {
+					if (entity instanceof Tetrobot) {
+						((Tetrobot) entity).setY(targetY);
 					}
 				}
-
-				copyDownEntitiesAtRowAndAbove(y - 1);
-				y++; // Recheck the same row after shifting
 			}
 		}
 	}

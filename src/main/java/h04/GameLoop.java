@@ -44,16 +44,17 @@ public class GameLoop {
     }
 
 
-    public void handleInput(KeyPressEvent event) {
+    public boolean handleInput(KeyPressEvent event) {
         switch (event.getKey()) {
             case A -> moveLeftRightChecked(Direction.LEFT);
-            case S -> moveDownChecked();
+            case S -> { moveDownChecked(); return true; }
             case D -> moveLeftRightChecked(Direction.RIGHT);
             case LEFT -> rotateChecked(false);
             case RIGHT -> rotateChecked(true);
-            case SPACE -> tetrisWorld.drop();
+            case SPACE -> {tetrisWorld.drop(); return true;}
             default -> {}
         }
+        return false;
     }
 
     public void gameLoop() {
@@ -69,17 +70,18 @@ public class GameLoop {
         // time/clock object to track time since last automatic drop, to implement gravity
         var lastDropTime = System.currentTimeMillis();
         
+        boolean action = false;
         while (true) {
             if (tetrisWorld.getActiveSwarm() == null) {
                 var randomTetromino = new Random().nextInt(7);
                 Swarm newSwarm = switch (randomTetromino) {
-                    case 0 -> new I(5, 5);
-                    case 1 -> new O(5, 5);
-                    case 2 -> new T(5, 5);
-                    case 3 -> new L(5, 5, false);
-                    case 4 -> new L(5, 5, true);
-                    case 5 -> new S(5, 5, false);
-                    case 6 -> new S(5, 5, true);
+                    case 0 -> new I(4, 16);
+                    case 1 -> new O(4, 16);
+                    case 2 -> new T(4, 17);
+                    case 3 -> new L(4, 17, false);
+                    case 4 -> new L(4, 17, true);
+                    case 5 -> new S(4, 17, false);
+                    case 6 -> new S(4, 17, true);
                     default -> throw new IllegalStateException("Unexpected value: " + randomTetromino);
                 };
                 tetrisWorld.setActiveSwarm(newSwarm);
@@ -87,14 +89,28 @@ public class GameLoop {
             }
 
             if (!keyPressEvents.isEmpty()) {
-                handleInput(keyPressEvents.getFirst());
+                var gravityProgression = handleInput(keyPressEvents.getFirst());
                 keyPressEvents.clear();
+                
+                // reset the drop timer if the player has made a move that should reset gravity progression (e.g. moving down manually, or dropping)
+                if (gravityProgression) {
+                    lastDropTime = System.currentTimeMillis();
+                }
+
+                action = true;
             }
 
             var newTime = System.currentTimeMillis();
             if (newTime - lastDropTime >= 1000) {
                 moveDownChecked();
                 lastDropTime = newTime;
+                action = true;
+            }
+
+            if (action) {
+                tetrisWorld.debugPrint2();
+                tetrisWorld.clearRows();
+                action = false;
             }
         }
     }

@@ -108,7 +108,7 @@ public class ProjectionMatrix implements Cloneable {
 
                 int ndx2;
                 int ndy2;
-                if (clockwise) {
+                if (!clockwise) {
                     ndx2 = -dy2;
                     ndy2 = dx2;
                 } else {

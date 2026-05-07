@@ -1,36 +1,40 @@
 package h04;
 
+/* 
+ * The fopbot world has bottom left origin, so does our memory representation, however this means that
+ * visual in the editor the bottom row of the shape is the first row of the matrix, which is a bit counterintuitive.
+ */
+
 public enum Tetromino {
-    I(new boolean[][]{
-        {false, false, false, false},
-        {true, true, true, true},
-        {false, false, false, false},
-        {false, false, false, false}}, 3, 3),
-    O(new boolean[][]{
-        {false, true, true, false},
-        {false, true, true, false},
-        {false, false, false, false},
-        {false, false, false, false}}, 3, 1),
-    T(new boolean[][]{
-        {false, true, false},
-        {true, true, true},
-        {false, false, false}}, 2, 2),
-    L(new boolean[][]{
-        {false, true, false},
-        {false, true, false},
-        {false, true, true}}, 2, 2),
-    J(new boolean[][]{
-        {false, true, false},
-        {false, true, false},
-        {true, true, false}}, 2, 2),
-    S(new boolean[][]{
-        {false, true, true},
-        {true, true, false},
-        {false, false, false}}, 2, 2),
-    Z(new boolean[][]{
-        {true, true, false},
-        {false, true, true},
-        {false, false, false}}, 2, 2);
+
+    I(new boolean[][] {
+            { false, false, false, false },
+            { false, false, false, false },
+            { true, true, true, true },
+            { false, false, false, false } }, 3, 3),
+    O(new boolean[][] {
+            { true, true },
+            { true, true } }, 1, 1),
+    T(new boolean[][] {
+            { false, false, false },
+            { true, true, true },
+            { false, true, false } }, 2, 2),
+    L(new boolean[][] {
+            { false, true, true },
+            { false, true, false },
+            { false, true, false } }, 2, 2),
+    J(new boolean[][] {
+            { true, true, false },
+            { false, true, false },
+            { false, true, false } }, 2, 2),
+    S(new boolean[][] {
+            { false, false, false },
+            { true, true, false },
+            { false, true, true } }, 2, 2),
+    Z(new boolean[][] {
+            { false, false, false },
+            { false, true, true },
+            { true, true, false } }, 2, 2);
 
     public final boolean[][] shape;
     private final int pivotX2;
@@ -53,19 +57,6 @@ public enum Tetromino {
     public int getPivotY2() {
         return pivotY2;
     }
-
-//    public TemplateData mirrored() {
-//        boolean[][] mirroredShape = deepCopy(shape);
-//        for (int y = 0; y < mirroredShape.length; y++) {
-//            for (int left = 0, right = mirroredShape[y].length - 1; left < right; left++, right--) {
-//                boolean tmp = mirroredShape[y][left];
-//                mirroredShape[y][left] = mirroredShape[y][right];
-//                mirroredShape[y][right] = tmp;
-//            }
-//        }
-//        int mirroredPivotX2 = 2 * (mirroredShape[0].length - 1) - pivotX2;
-//        return new TemplateData(mirroredShape, mirroredPivotX2, pivotY2);
-//    }
 
     public Tetromino mirrored() {
         return this == L ? J : this == J ? L : this == S ? Z : this == Z ? S : this;
