@@ -42,4 +42,10 @@ public class TestSwarm extends Swarm{
     public void spawn() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Test";
+    }
+
 }

@@ -11,4 +11,9 @@ public class T extends Swarm{
         this.projectionMatrix = new ProjectionMatrix(Tetromino.T);
     }
 
+    @Override
+    public String toString() {
+        return "T";
+    }
+
 }
