@@ -10,37 +10,6 @@ public class Main {
     private static int debugPrintCount = 0;
 
     /**
-     * Prints the projection matrix to the console.
-     *
-     * @param projectionMatrix the projection matrix to print
-     * @param label            the label for the snapshot
-     *
-     * TODO: REMOVE FOR STUDENT TEMPLATE
-     */
-    @SolutionOnly
-    static void printMatrix(ProjectionMatrix projectionMatrix, String label) {
-        boolean[][] matrix = projectionMatrix.getShape();
-        int snapshot = ++debugPrintCount;
-
-        String title = (label == null || label.isBlank())
-                ? "Snapshot " + snapshot
-                : "Snapshot " + snapshot + " - " + label;
-
-        System.out.println("=== " + title + " ===");
-        for (boolean[] row : matrix) {
-            StringBuilder line = new StringBuilder("| ");
-            for (boolean cell : row) {
-                line.append(cell ? "X " : ". ");
-            }
-            line.append("|");
-            System.out.println(line);
-        }
-        System.out.println(
-                "pivot(x2,y2)= (" + projectionMatrix.getPivotX2() + ", " + projectionMatrix.getPivotY2() + ")");
-        System.out.println();
-    }
-
-    /**
      * Main entry point in executing the program.
      *
      * @param args program arguments, currently ignored

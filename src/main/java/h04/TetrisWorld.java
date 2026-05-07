@@ -59,24 +59,6 @@ public class TetrisWorld {
 		}
 	}
 
-	// ugly shit, maybe useful for test developers, remove from student template
-	// TODO: REMOVE
-	// public void captureWorldSnapshot() {
-	// KarelWorld world = World.getGlobalWorld();
-	// for (int y = 0; y < HEIGHT; y++) {
-	// for (int x = 0; x < WIDTH; x++) {
-	// fopbot.Field field = world.getField(x, y);
-	// cells[y][x] = TetrisWorldState.UNDEFINED;
-	// for (FieldEntity entity : field.getEntities()) {
-	// if (entity instanceof Tetrobot) {
-	// cells[y][x] = TetrisWorldState.FIXED_BOT;
-	// break;
-	// }
-	// }
-	// }
-	// }
-	// }
-
 	/**
 	 * Sets the active swarm on the Tetris board.
 	 *
@@ -169,58 +151,6 @@ public class TetrisWorld {
 	}
 
 	/**
-	 * Prints the current state of the Tetris world to the console.
-	 *
-	 * <p>
-	 * Fixed bots are printed as {@code X}, the active swarm's projection footprint
-	 * as {@code #},
-	 * and empty cells as {@code .}.
-	 * </p>
-	 *
-	 * <p>
-	 * TODO: REMOVE FROM STUDENT TEMPLATE ONLY IF REVIEW FINDS THIS NOT USEFUL OR
-	 * TOO USEFUL
-	 * KEEP FOR TEST DEVELOPERS
-	 * </p>
-	 */
-	public void debugPrint2() {
-		System.out.println("=== TetrisWorld ===");
-		int[][] points = null;
-		int minX = 0;
-		int minY = 0;
-		int maxX = -1;
-		int maxY = -1;
-		if (activeSwarm != null) {
-			ProjectionMatrix projectionMatrix = activeSwarm.getProjectionMatrix();
-			boolean[][] shape = projectionMatrix.getShape();
-			points = projectionMatrix.projectToWorld(activeSwarm.getX(), activeSwarm.getY());
-			minX = activeSwarm.getX();
-			minY = activeSwarm.getY();
-			maxX = minX + shape[0].length - 1;
-			maxY = minY + shape.length - 1;
-		}
-		for (int displayY = HEIGHT - 1; displayY >= 0; displayY--) {
-			StringBuilder line = new StringBuilder("| ");
-			for (int x = 0; x < WIDTH; x++) {
-				boolean occupied = cells[displayY][x] == TetrisWorldState.FIXED_BOT;
-				if (points != null) {
-					for (int[] point : points) {
-						if (point[0] == x && point[1] == displayY) {
-							occupied = true;
-							break;
-						}
-					}
-				}
-				boolean insideBounds = points != null && x >= minX && x <= maxX && displayY >= minY && displayY <= maxY;
-				line.append(occupied ? "X " : insideBounds ? "# " : ". ");
-			}
-			line.append("|");
-			System.out.println(line);
-		}
-		System.out.println();
-	}
-
-	/**
 	 * Checks whether the given coordinates are within the bounds of the Tetris
 	 * board.
 	 *
@@ -280,14 +210,15 @@ public class TetrisWorld {
 	 * @param y the index of the row to clear
 	 */
 	private void clearRowEntities(int y) {
-		for (int x = 0; x < WIDTH; x++) {
-			cells[y][x] = TetrisWorldState.UNDEFINED;
-			for (FieldEntity entity : Utils.getEntitiesAt(x, y)) {
-				if (entity instanceof Tetrobot) {
-					Utils.removeEntity(entity, World.getGlobalWorld());
-				}
-			}
-		}
+        // TODO: uncomment after implementing Tetrobot
+//		for (int x = 0; x < WIDTH; x++) {
+//			cells[y][x] = TetrisWorldState.UNDEFINED;
+//			for (FieldEntity entity : Utils.getEntitiesAt(x, y)) {
+//				if (entity instanceof Tetrobot) {
+//					Utils.removeEntity(entity, World.getGlobalWorld());
+//				}
+//			}
+//		}
 	}
 
 	/**
@@ -296,17 +227,18 @@ public class TetrisWorld {
 	 * @param sourceY the index of the first row above the cleared row
 	 */
 	private void shiftRowsDownFrom(int sourceY) {
-		for (int readY = sourceY; readY < HEIGHT; readY++) {
-			int targetY = readY - 1;
-			for (int x = 0; x < WIDTH; x++) {
-				cells[targetY][x] = cells[readY][x];
-				cells[readY][x] = TetrisWorldState.UNDEFINED;
-				for (FieldEntity entity : Utils.getEntitiesAt(x, readY)) {
-					if (entity instanceof Tetrobot) {
-						((Tetrobot) entity).setY(targetY);
-					}
-				}
-			}
-		}
+        // TODO: uncomment after implementing Tetrobot
+//		for (int readY = sourceY; readY < HEIGHT; readY++) {
+//			int targetY = readY - 1;
+//			for (int x = 0; x < WIDTH; x++) {
+//				cells[targetY][x] = cells[readY][x];
+//				cells[readY][x] = TetrisWorldState.UNDEFINED;
+//				for (FieldEntity entity : Utils.getEntitiesAt(x, readY)) {
+//					if (entity instanceof Tetrobot) {
+//						((Tetrobot) entity).setY(targetY);
+//					}
+//				}
+//			}
+//		}
 	}
 }

@@ -1,12 +1,14 @@
 package h04.swarms;
 
 import fopbot.Direction;
+import fopbot.Robot;
 import fopbot.World;
 import h04.*;
+import org.tudalgo.algoutils.student.Student;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 /**
- * Represents a swarm of {@link Tetrobot}s that forms a tetromino in the Tetris
+ * Represents a swarm of Tetrobots that forms a tetromino in the Tetris
  * world.
  *
  * <p>
@@ -34,7 +36,8 @@ public abstract class Swarm {
     /**
      * The robots that make up the swarm.
      */
-    protected Tetrobot[] tetrobots;
+    // TODO: change to Tetrobot[] after implementing Tetrobot
+    protected Robot[] tetrobots;
 
     /**
      * The projection matrix that defines the swarm shape.
@@ -142,19 +145,22 @@ public abstract class Swarm {
      */
     @DoNotTouch
     public boolean canMove(Direction direction) {
-        if (direction == Direction.UP)
-            return false;
-
-        for (int i = 0; i < tetrobots.length; i++) {
-            while (!tetrobots[i].getDirection().equals(direction)) {
-                tetrobots[i].turnLeft();
-            }
-            if (!tetrobots[i].isFrontClear(tetrobots)) {
-                return false;
-            }
-        }
-
-        return true;
+        // TODO: uncomment after implementing Tetrobot
+//        if (direction == Direction.UP)
+//            return false;
+//
+//        for (int i = 0; i < tetrobots.length; i++) {
+//            while (!tetrobots[i].getDirection().equals(direction)) {
+//                tetrobots[i].turnLeft();
+//            }
+//            if (!tetrobots[i].isFrontClear(tetrobots)) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+        // TODO: remove after implementing Tetrobot
+        return Student.crash();
     }
 
     /**
@@ -162,18 +168,19 @@ public abstract class Swarm {
      */
     @DoNotTouch
     public void spawn() {
-        if (this.tetrobots != null) {
-            for (int i = 0; i < tetrobots.length; i++) {
-                Utils.removeRobot(tetrobots[i]);
-            }
-        }
-
-        int[][] projected = projectionMatrix.projectToWorld(x, y);
-        Tetrobot[] newTetrobots = new Tetrobot[projected.length];
-        for (int i = 0; i < projected.length; i++) {
-            newTetrobots[i] = new Tetrobot(projected[i][0], projected[i][1]);
-        }
-        this.tetrobots = newTetrobots;
+        // TODO: uncomment after implementing Tetrobot
+//        if (this.tetrobots != null) {
+//            for (int i = 0; i < tetrobots.length; i++) {
+//                Utils.removeRobot(tetrobots[i]);
+//            }
+//        }
+//
+//        int[][] projected = projectionMatrix.projectToWorld(x, y);
+//        Tetrobot[] newTetrobots = new Tetrobot[projected.length];
+//        for (int i = 0; i < projected.length; i++) {
+//            newTetrobots[i] = new Tetrobot(projected[i][0], projected[i][1]);
+//        }
+//        this.tetrobots = newTetrobots;
     }
 
     /**

@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.tudalgo.algoutils.student.Student;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -54,19 +55,8 @@ public class GameLoop {
      */
     @StudentImplementationRequired
     protected void rotateChecked(boolean clockwise) {
-        var projectionMatrix = tetrisWorld.getActiveSwarm().getProjectionMatrix().clone();
-
-        if (clockwise) {
-            projectionMatrix.rotateRight();
-        } else {
-            projectionMatrix.rotateLeft();
-        }
-
-        if (tetrisWorld.canProject(projectionMatrix, tetrisWorld.getActiveSwarm().getX(), tetrisWorld.getActiveSwarm().getY())) {
-            tetrisWorld.getActiveSwarm().setProjectionMatrix(projectionMatrix);
-        }
-
-        tetrisWorld.getActiveSwarm().commitSRSRotation();
+        // TODO: remove before implementing
+        Student.crash();
     }
 
     /**
@@ -77,16 +67,8 @@ public class GameLoop {
      */
     @StudentImplementationRequired
     public boolean handleInput(KeyPressEvent event) {
-        switch (event.getKey()) {
-            case A -> moveLeftRightChecked(Direction.LEFT);
-            case S -> { moveDownChecked(); return true; }
-            case D -> moveLeftRightChecked(Direction.RIGHT);
-            case LEFT -> rotateChecked(false);
-            case RIGHT -> rotateChecked(true);
-            case SPACE -> {tetrisWorld.drop(); return true;}
-            default -> {}
-        }
-        return false;
+        // TODO: remove before implementing
+        return Student.crash();
     }
 
     /**
@@ -116,10 +98,11 @@ public class GameLoop {
                     case 0 -> new I(3, 17);
                     case 1 -> new O(4, 18);
                     case 2 -> new T(3, 17);
-                    case 3 -> new L(3, 17, false);
-                    case 4 -> new L(3, 17, true);
-                    case 5 -> new S(3, 17, false);
-                    case 6 -> new S(3, 17, true);
+                    // TODO: uncomment after implementing L and S
+                    //case 3 -> new L(3, 17, false);
+                    //case 4 -> new L(3, 17, true);
+                    //case 5 -> new S(3, 17, false);
+                    //case 6 -> new S(3, 17, true);
                     default -> throw new IllegalStateException("Unexpected value: " + randomTetromino);
                 };
                 tetrisWorld.setActiveSwarm(newSwarm);
@@ -182,14 +165,14 @@ public class GameLoop {
     }
 
     /**
-     * Opens a simple input test for moving a single {@link Tetrobot} with the arrow keys.
+     * Opens a simple input test for moving a single Tetrobot with the arrow keys.
      */
     @DoNotTouch
     public void inputTest() {
         World.setSize(TetrisWorld.WIDTH, TetrisWorld.HEIGHT);
         World.setDelay(100);
         World.setVisible(true);
-        Tetrobot testBot = new Tetrobot(TetrisWorld.WIDTH / 2, TetrisWorld.HEIGHT / 2);
+        Robot testBot = new Robot(TetrisWorld.WIDTH / 2, TetrisWorld.HEIGHT / 2);
         List<KeyPressEvent> keyPressEvents = Collections.synchronizedList(new LinkedList<>());
         InputHandler inputHandler = InputHandler.getInputHandler();
         inputHandler.addKeyPressListener(keyPressEvents::add);
