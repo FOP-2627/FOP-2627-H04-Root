@@ -5,38 +5,46 @@ import fopbot.World;
 import h04.*;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
-@DoNotTouch
 public abstract class Swarm {
 
+    @DoNotTouch
     protected int x;
 
+    @DoNotTouch
     protected int y;
 
     protected Tetrobot[] tetrobots;
 
+    @DoNotTouch
     protected ProjectionMatrix projectionMatrix;
 
-    protected Tetromino tetromino;
+//    @DoNotTouch
+//    protected Tetromino tetromino;
 
+    @DoNotTouch
     public int getX() {
         return x;
     }
 
+    @DoNotTouch
     public int getY() {
         return y;
     }
 
+    @DoNotTouch
     public ProjectionMatrix getProjectionMatrix() {
         return projectionMatrix;
     }
 
+    @DoNotTouch
     public void setProjectionMatrix(ProjectionMatrix projectionMatrix) {
         this.projectionMatrix = projectionMatrix;
     }
 
-    public Tetromino getTetromino() {
-        return tetromino;
-    }
+//    @DoNotTouch
+//    public Tetromino getTetromino() {
+//        return tetromino;
+//    }
 
 
     /*
@@ -45,15 +53,17 @@ public abstract class Swarm {
      * @param direction the direction to move
      * @throws IllegalArgumentException if the direction is not supported for swarm movement (e.g., UP)
      */
+    @DoNotTouch
     public Swarm (int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    @DoNotTouch
     public void move(Direction direction) throws IllegalArgumentException {
         if (direction == Direction.UP)
             throw new IllegalArgumentException("Direction UP is not supported for Swarm movement.");
-            
+
         for (int i = 0; i < tetrobots.length; i++) {
             while (!tetrobots[i].getDirection().equals(direction)) {
                 tetrobots[i].turnLeft();
@@ -66,6 +76,7 @@ public abstract class Swarm {
         y += direction.getDy();
     }
 
+    @DoNotTouch
     public boolean isFrontClear() {
         for (int i = 0; i < tetrobots.length; i++) {
             if (!tetrobots[i].isFrontClear(tetrobots)) {
@@ -75,6 +86,7 @@ public abstract class Swarm {
         return true;
     }
 
+    @DoNotTouch
     public boolean canMove(Direction direction) {
         if (direction == Direction.UP)
             return false;
@@ -85,12 +97,13 @@ public abstract class Swarm {
             }
             if (!tetrobots[i].isFrontClear(tetrobots)) {
                 return false;
-            }        
+            }
         }
 
         return true;
     }
 
+    @DoNotTouch
     public void spawn() {
         if (this.tetrobots != null) {
             for (int i = 0; i < tetrobots.length; i++) {
@@ -106,6 +119,7 @@ public abstract class Swarm {
         this.tetrobots = newTetrobots;
     }
 
+    @DoNotTouch
     public void commitSRSRotation() {
         int[][] projected = projectionMatrix.projectToWorld(x, y);
         for (int i = 0; i < tetrobots.length; i++) {
@@ -115,7 +129,8 @@ public abstract class Swarm {
             tetrobots[i].setY(newY);
         }
     }
-    
+
+    @DoNotTouch
     public void turnRight() {
         projectionMatrix.rotateRight();
         int[][] projected = projectionMatrix.projectToWorld(x, y);
@@ -127,6 +142,7 @@ public abstract class Swarm {
         }
     }
 
+    @DoNotTouch
     public void turnLeft() {
         projectionMatrix.rotateLeft();
         int[][] projected = projectionMatrix.projectToWorld(x, y);
