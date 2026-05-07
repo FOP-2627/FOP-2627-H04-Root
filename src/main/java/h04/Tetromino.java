@@ -1,10 +1,13 @@
 package h04;
 
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+
 /**
  * Represents the seven standard tetromino shapes used in Tetris.
  *
  * <p>Each tetromino is defined by a 2D boolean array for its shape and a pivot point for rotation.</p>
  */
+@DoNotTouch
 public enum Tetromino {
 
     I(new boolean[][] {

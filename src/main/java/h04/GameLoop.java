@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 /**
  * Main controller for the Tetris game.
@@ -25,6 +26,7 @@ public class GameLoop {
     /**
      * Moves the active swarm down if possible, or drops it into place otherwise.
      */
+    @DoNotTouch
     protected void moveDownChecked() {
         if (tetrisWorld.getActiveSwarm().canMove(Direction.DOWN)) {
             tetrisWorld.getActiveSwarm().move(Direction.DOWN);
@@ -38,6 +40,7 @@ public class GameLoop {
      *
      * @param direction the direction to move, must be {@link Direction#LEFT} or {@link Direction#RIGHT}
      */
+    @DoNotTouch
     protected void moveLeftRightChecked(Direction direction) {
         if (tetrisWorld.getActiveSwarm().canMove(direction)) {
             tetrisWorld.getActiveSwarm().move(direction);
@@ -49,6 +52,7 @@ public class GameLoop {
      *
      * @param clockwise {@code true} to rotate clockwise, {@code false} to rotate counterclockwise
      */
+    @StudentImplementationRequired
     protected void rotateChecked(boolean clockwise) {
         var projectionMatrix = tetrisWorld.getActiveSwarm().getProjectionMatrix().clone();
 
@@ -71,6 +75,7 @@ public class GameLoop {
      * @param event the key press event to handle
      * @return {@code true} if the input should reset gravity progression, otherwise {@code false}
      */
+    @StudentImplementationRequired
     public boolean handleInput(KeyPressEvent event) {
         switch (event.getKey()) {
             case A -> moveLeftRightChecked(Direction.LEFT);
@@ -89,6 +94,7 @@ public class GameLoop {
      * The loop creates the playing field, spawns new swarms, processes input,
      * applies gravity, and clears rows until no new swarm can be spawned.
      */
+    @DoNotTouch
     public void gameLoop() {
         tetrisWorld = new TetrisWorld();
         World.setSize(TetrisWorld.WIDTH, TetrisWorld.HEIGHT);
@@ -130,7 +136,7 @@ public class GameLoop {
             if (!keyPressEvents.isEmpty()) {
                 var gravityProgression = handleInput(keyPressEvents.getFirst());
                 keyPressEvents.clear();
-                
+
                 // Reset the drop timer after player actions that should delay gravity.
                 if (gravityProgression) {
                     lastDropTime = System.currentTimeMillis();
@@ -160,6 +166,7 @@ public class GameLoop {
      * @param event the key press event to handle
      * @param robot the robot to control
      */
+    @DoNotTouch
     public void handleTestInput(KeyPressEvent event, Robot robot) {
         Direction direction = switch (event.getKey()) {
             case UP -> Direction.UP;
@@ -177,6 +184,7 @@ public class GameLoop {
     /**
      * Opens a simple input test for moving a single {@link Tetrobot} with the arrow keys.
      */
+    @DoNotTouch
     public void inputTest() {
         World.setSize(TetrisWorld.WIDTH, TetrisWorld.HEIGHT);
         World.setDelay(100);

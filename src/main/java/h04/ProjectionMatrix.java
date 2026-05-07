@@ -5,25 +5,23 @@ import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 /**
  * A matrix-based projection for tetrominoes with SRS-style pivot rotation.
  */
+@DoNotTouch
 public class ProjectionMatrix implements Cloneable {
 
     /**
      * The shape of the projection matrix.
      * A value of {@code true} indicates a block, and {@code false} indicates empty space.
      */
-    @DoNotTouch
     private boolean[][] shape;
 
     /**
      * The pivot X coordinate multiplied by 2.
      */
-    @DoNotTouch
     private int pivotX2;
-    
+
     /**
      * The pivot Y coordinate multiplied by 2.
      */
-    @DoNotTouch
     private int pivotY2;
 
     /**

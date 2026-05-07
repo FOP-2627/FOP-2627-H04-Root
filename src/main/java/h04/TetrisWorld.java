@@ -6,12 +6,14 @@ import fopbot.KarelWorld;
 import fopbot.RobotFamily;
 import fopbot.World;
 import h04.swarms.Swarm;
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 /**
  * Logical Tetris board with the standard dimensions of 10 by 20.
  *
  * The board stores fixed tetromino cells and keeps at most one active swarm.
  */
+@DoNotTouch
 public class TetrisWorld {
 
 	/**
@@ -77,7 +79,7 @@ public class TetrisWorld {
 
 	/**
 	 * Sets the active swarm on the Tetris board.
-	 * 
+	 *
 	 * @param swarm the swarm to set as active
 	 */
 	public void setActiveSwarm(Swarm swarm) {
@@ -86,7 +88,7 @@ public class TetrisWorld {
 
 	/**
 	 * Returns the currently active swarm.
-	 * 
+	 *
 	 * @return the active swarm, or {@code null} if there is no active swarm
 	 */
 	public Swarm getActiveSwarm() {
@@ -174,7 +176,7 @@ public class TetrisWorld {
 	 * as {@code #},
 	 * and empty cells as {@code .}.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * TODO: REMOVE FROM STUDENT TEMPLATE ONLY IF REVIEW FINDS THIS NOT USEFUL OR
 	 * TOO USEFUL

@@ -5,10 +5,10 @@ import h04.ProjectionMatrix;
 import h04.Tetromino;
 import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 
-@StudentCreationRequired
 /**
  * Swarm implementation for the L tetromino.
  */
+@StudentCreationRequired
 public class L extends Swarm{
 
     private final boolean mirrored;

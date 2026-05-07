@@ -2,6 +2,7 @@ package h04;
 
 import fopbot.FieldEntity;
 import fopbot.Robot;
+import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 
 @StudentCreationRequired
@@ -24,6 +25,7 @@ public class Tetrobot extends Robot {
      * @param entity the entity to search for
      * @return {@code true} if the entity is found, otherwise {@code false}
      */
+    @SolutionOnly
     private boolean containsEntity(FieldEntity[] entities, FieldEntity entity) {
         if (entities == null) {
             return false;
