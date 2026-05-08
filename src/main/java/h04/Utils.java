@@ -3,9 +3,6 @@ package h04;
 import fopbot.*;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -77,19 +74,7 @@ public class Utils {
      * @param karelWorld the world from which to remove the entity
      */
     public static void removeEntity(FieldEntity entity, KarelWorld karelWorld) {
-        fopbot.Field field = karelWorld.getField(entity.getX(), entity.getY());
-        List<FieldEntity> entities = field.getEntities();
-        entities.remove(entity);
-
-        try {
-            Class<?> worldClass = karelWorld.getClass();
-            Method updateMethod = worldClass.getDeclaredMethod("triggerUpdate");
-            updateMethod.setAccessible(true);
-            updateMethod.invoke(karelWorld);
-            updateMethod.setAccessible(false);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        karelWorld.removeFieldEntity(entity);
     }
 
     /**
