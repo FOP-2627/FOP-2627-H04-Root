@@ -1,5 +1,7 @@
 package h04;
 
+import org.tudalgo.algoutils.student.annotation.SolutionOnly;
+
 /**
  * Main entry point in executing the program.
  */
@@ -12,9 +14,10 @@ public class Main {
      *
      * @param projectionMatrix the projection matrix to print
      * @param label            the label for the snapshot
-     * 
+     *
      * TODO: REMOVE FOR STUDENT TEMPLATE
      */
+    @SolutionOnly
     static void printMatrix(ProjectionMatrix projectionMatrix, String label) {
         boolean[][] matrix = projectionMatrix.getShape();
         int snapshot = ++debugPrintCount;

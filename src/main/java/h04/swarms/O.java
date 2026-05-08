@@ -3,12 +3,13 @@ package h04.swarms;
 import fopbot.RobotFamily;
 import h04.ProjectionMatrix;
 import h04.Tetromino;
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 
-@StudentCreationRequired
 /**
  * Swarm implementation for the O tetromino.
  */
+@DoNotTouch
 public class O extends Swarm{
 
     /**

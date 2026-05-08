@@ -5,10 +5,10 @@ import h04.ProjectionMatrix;
 import h04.Tetromino;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
-@DoNotTouch
 /**
  * Swarm implementation for the T tetromino.
  */
+@DoNotTouch
 public class T extends Swarm{
 
     /**

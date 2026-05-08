@@ -4,7 +4,9 @@ import fopbot.Direction;
 import fopbot.FieldEntity;
 import h04.Tetrobot;
 import org.junit.jupiter.api.Test;
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
+@DoNotTouch
 public class TestSwarm extends Swarm{
     public TestSwarm (int x, int y) {
         super(x, y);
