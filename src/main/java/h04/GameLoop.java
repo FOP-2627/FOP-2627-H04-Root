@@ -38,7 +38,8 @@ public class GameLoop {
     /**
      * Moves the active swarm left or right if the move is possible.
      *
-     * @param direction the direction to move, must be {@link Direction#LEFT} or {@link Direction#RIGHT}
+     * @param direction the direction to move, must be {@link Direction#LEFT} or
+     *                  {@link Direction#RIGHT}
      */
     @DoNotTouch
     protected void moveLeftRightChecked(Direction direction) {
@@ -50,7 +51,8 @@ public class GameLoop {
     /**
      * Rotates the active swarm if the rotated projection can be placed.
      *
-     * @param clockwise {@code true} to rotate clockwise, {@code false} to rotate counterclockwise
+     * @param clockwise {@code true} to rotate clockwise, {@code false} to rotate
+     *                  counterclockwise
      */
     @StudentImplementationRequired
     protected void rotateChecked(boolean clockwise) {
@@ -62,7 +64,8 @@ public class GameLoop {
             projectionMatrix.rotateLeft();
         }
 
-        if (tetrisWorld.canProject(projectionMatrix, tetrisWorld.getActiveSwarm().getX(), tetrisWorld.getActiveSwarm().getY())) {
+        if (tetrisWorld.canProject(projectionMatrix, tetrisWorld.getActiveSwarm().getX(),
+                tetrisWorld.getActiveSwarm().getY())) {
             tetrisWorld.getActiveSwarm().setProjectionMatrix(projectionMatrix);
         }
 
@@ -73,18 +76,26 @@ public class GameLoop {
      * Handles input for controlling the active swarm.
      *
      * @param event the key press event to handle
-     * @return {@code true} if the input should reset gravity progression, otherwise {@code false}
+     * @return {@code true} if the input should reset gravity progression, otherwise
+     *         {@code false}
      */
     @StudentImplementationRequired
     public boolean handleInput(KeyPressEvent event) {
         switch (event.getKey()) {
             case A -> moveLeftRightChecked(Direction.LEFT);
-            case S -> { moveDownChecked(); return true; }
+            case S -> {
+                moveDownChecked();
+                return true;
+            }
             case D -> moveLeftRightChecked(Direction.RIGHT);
             case LEFT -> rotateChecked(false);
             case RIGHT -> rotateChecked(true);
-            case SPACE -> {tetrisWorld.drop(); return true;}
-            default -> {}
+            case SPACE -> {
+                tetrisWorld.drop();
+                return true;
+            }
+            default -> {
+            }
         }
         return false;
     }
@@ -122,14 +133,14 @@ public class GameLoop {
                     case 6 -> new S(3, 17, true);
                     default -> throw new IllegalStateException("Unexpected value: " + randomTetromino);
                 };
-                tetrisWorld.setActiveSwarm(newSwarm);
 
                 // Stop when the next swarm cannot be placed.
-                if (!tetrisWorld.canProject(tetrisWorld.getActiveSwarm())) {
+                if (!tetrisWorld.canProject(newSwarm)) {
                     System.out.println("Game Over!");
                     break;
                 }
 
+                tetrisWorld.setActiveSwarm(newSwarm);
                 tetrisWorld.getActiveSwarm().spawn();
             }
 
@@ -143,6 +154,10 @@ public class GameLoop {
                 }
 
                 action = true;
+            } else {
+                // no input, therefore no user action, yeets the thread back to the os to save
+                // on resources
+                Thread.yield();
             }
 
             var newTime = System.currentTimeMillis();
@@ -182,7 +197,8 @@ public class GameLoop {
     }
 
     /**
-     * Opens a simple input test for moving a single {@link Tetrobot} with the arrow keys.
+     * Opens a simple input test for moving a single {@link Tetrobot} with the arrow
+     * keys.
      */
     @DoNotTouch
     public void inputTest() {

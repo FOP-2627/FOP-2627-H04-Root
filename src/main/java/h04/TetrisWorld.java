@@ -27,37 +27,9 @@ public class TetrisWorld {
 	public static final int HEIGHT = 20;
 
 	/**
-	 * The state of each cell in the Tetris world.
-	 */
-	private final TetrisWorldState[][] cells;
-
-	/**
 	 * The active swarm on the Tetris board.
 	 */
 	private Swarm activeSwarm;
-
-	/**
-	 * Creates a new Tetris world with the standard dimensions.
-	 */
-	public TetrisWorld() {
-		this.cells = new TetrisWorldState[HEIGHT][WIDTH];
-		for (int y = 0; y < HEIGHT; y++) {
-			for (int x = 0; x < WIDTH; x++) {
-				cells[y][x] = TetrisWorldState.UNDEFINED;
-			}
-		}
-	}
-
-	/**
-	 * Clears the Tetris world by removing all fixed bots.
-	 */
-	public void clear() {
-		for (int y = 0; y < HEIGHT; y++) {
-			for (int x = 0; x < WIDTH; x++) {
-				cells[y][x] = TetrisWorldState.UNDEFINED;
-			}
-		}
-	}
 
 	// ugly shit, maybe useful for test developers, remove from student template
 	// TODO: REMOVE
@@ -103,6 +75,45 @@ public class TetrisWorld {
 	}
 
 	/**
+	 * Checks whether the cell at the given coordinates is part of the current
+	 * active swarm's projection footprint.
+	 * 
+	 * @param x x-coordinate of the cell to check
+	 * @param y y-coordinate of the cell to check
+	 * @return {@code true} if the cell is part of the active swarm's projection
+	 *         footprint, {@code false} otherwise
+	 */
+	private boolean isActiveSwarmCell(int x, int y) {
+		if (activeSwarm == null) {
+			return false;
+		}
+		int[][] points = activeSwarm.getProjectionMatrix().projectToWorld(activeSwarm.getX(), activeSwarm.getY());
+		for (int[] point : points) {
+			if (point[0] == x && point[1] == y) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Checks whether the bot at the given coordinates is blocking the projection of
+	 * the active swarm.
+	 * 
+	 * @param x x-coordinate of the cell to check
+	 * @param y y-coordinate of the cell to check
+	 * @return {@code true} if a blocking bot is found, {@code false} otherwise
+	 */
+	private boolean hasBlockingBotAt(int x, int y) {
+		for (FieldEntity entity : Utils.getEntitiesAt(x, y)) {
+			if (entity instanceof Tetrobot && !isActiveSwarmCell(x, y)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Checks whether the given projection matrix can be placed at the specified
 	 * world coordinates.
 	 *
@@ -127,7 +138,7 @@ public class TetrisWorld {
 			if (!isInside(x, y)) {
 				return false;
 			}
-			if (cells[y][x] == TetrisWorldState.FIXED_BOT) {
+			if (hasBlockingBotAt(x, y)) {
 				return false;
 			}
 		}
@@ -160,10 +171,6 @@ public class TetrisWorld {
 			return false;
 		}
 
-		int[][] points = activeSwarm.getProjectionMatrix().projectToWorld(activeSwarm.getX(), activeSwarm.getY());
-		for (int[] point : points) {
-			cells[point[1]][point[0]] = TetrisWorldState.FIXED_BOT;
-		}
 		clearActiveSwarm();
 		return true;
 	}
@@ -202,7 +209,7 @@ public class TetrisWorld {
 		for (int displayY = HEIGHT - 1; displayY >= 0; displayY--) {
 			StringBuilder line = new StringBuilder("| ");
 			for (int x = 0; x < WIDTH; x++) {
-				boolean occupied = cells[displayY][x] == TetrisWorldState.FIXED_BOT;
+				boolean occupied = hasBlockingBotAt(x, displayY);
 				if (points != null) {
 					for (int[] point : points) {
 						if (point[0] == x && point[1] == displayY) {
@@ -267,7 +274,7 @@ public class TetrisWorld {
 	 */
 	private boolean isFullRow(int y) {
 		for (int x = 0; x < WIDTH; x++) {
-			if (cells[y][x] != TetrisWorldState.FIXED_BOT) {
+			if (!hasBlockingBotAt(x, y)) {
 				return false;
 			}
 		}
@@ -281,7 +288,6 @@ public class TetrisWorld {
 	 */
 	private void clearRowEntities(int y) {
 		for (int x = 0; x < WIDTH; x++) {
-			cells[y][x] = TetrisWorldState.UNDEFINED;
 			for (FieldEntity entity : Utils.getEntitiesAt(x, y)) {
 				if (entity instanceof Tetrobot) {
 					Utils.removeEntity(entity, World.getGlobalWorld());
@@ -299,8 +305,6 @@ public class TetrisWorld {
 		for (int readY = sourceY; readY < HEIGHT; readY++) {
 			int targetY = readY - 1;
 			for (int x = 0; x < WIDTH; x++) {
-				cells[targetY][x] = cells[readY][x];
-				cells[readY][x] = TetrisWorldState.UNDEFINED;
 				for (FieldEntity entity : Utils.getEntitiesAt(x, readY)) {
 					if (entity instanceof Tetrobot) {
 						((Tetrobot) entity).setY(targetY);
