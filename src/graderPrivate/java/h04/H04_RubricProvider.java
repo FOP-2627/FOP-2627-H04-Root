@@ -27,7 +27,7 @@ public class H04_RubricProvider implements RubricProvider {
         .addChildCriteria(
             criterion("Die übergebenen FieldEntities werden ignoriert.", 1),
             criterion("Es wird überprüft, ob sich die Position vor dem Tetrobot im Spielfeld befindet", 1),
-            criterion("Das überladene isFrontClear liefert das korrekte Ergebnis", 1)
+            criterion("Die überladene isFrontClear Methode liefert das korrekte Ergebnis", 1)
         ).build();
 
     private static final Criterion H4_1_4 = Criterion.builder()
@@ -55,8 +55,8 @@ public class H04_RubricProvider implements RubricProvider {
     private static final Criterion H4_2_2 = Criterion.builder()
         .shortDescription("H4.2.2 | S und Z")
         .addChildCriteria(
-            criterion("Die Klasse L wurde korrekt deklariert.", 1),
-            criterion("Der Konstruktor von L wurde korrekt implementiert", 1),
+            criterion("Die Klasse S wurde korrekt deklariert.", 1),
+            criterion("Der Konstruktor von S wurde korrekt implementiert", 1),
             criterion("Die Methode spawn ruft die spawn Methode von Swarm korrekt auf", 1),
             criterion("Die Methode spawn wurde korrekt implementiert", 1),
             criterion("Die Methode toString wurde korrekt implementiert. Insbesondere wurde der Bedingungsoperator verwendet", 1)
@@ -81,7 +81,7 @@ public class H04_RubricProvider implements RubricProvider {
         .shortDescription("H4.3.2 | Durchführung von SRS-Style-Rotationen")
         .addChildCriteria(
             criterion("Die Rotation wird am aktiven Schwarm ausgeführt", 1),
-            criterion("Die ProjectionMatrix wird nur dann gesetzt, wenn sie gültig ist.", 2),
+            criterion("Die Projektionsmatrix wird nur dann gesetzt, wenn sie gültig ist.", 2),
             criterion("Die Rotation wird in die richtige Richtung ausgeführt.", 2)
         ).build();
 
