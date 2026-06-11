@@ -54,7 +54,7 @@ public class GameLoop {
      * @param clockwise {@code true} to rotate clockwise, {@code false} to rotate
      *                  counterclockwise
      */
-    @StudentImplementationRequired
+    @StudentImplementationRequired("H4.3.2")
     protected void rotateChecked(boolean clockwise) {
         var projectionMatrix = tetrisWorld.getActiveSwarm().getProjectionMatrix().clone();
 
@@ -79,7 +79,7 @@ public class GameLoop {
      * @return {@code true} if the input should reset gravity progression, otherwise
      *         {@code false}
      */
-    @StudentImplementationRequired
+    @StudentImplementationRequired("H4.3.1")
     public boolean handleInput(KeyPressEvent event) {
         switch (event.getKey()) {
             case A -> moveLeftRightChecked(Direction.LEFT);

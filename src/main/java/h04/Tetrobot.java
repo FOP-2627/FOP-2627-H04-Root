@@ -5,7 +5,7 @@ import fopbot.Robot;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 
-@StudentCreationRequired
+@StudentCreationRequired("H4.1")
 public class Tetrobot extends Robot {
 
     /**

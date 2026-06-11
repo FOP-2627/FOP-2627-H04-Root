@@ -8,7 +8,7 @@ import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
 /**
  * Swarm implementation for the L tetromino.
  */
-@StudentCreationRequired
+@StudentCreationRequired("H4.2.1")
 public class L extends Swarm{
 
     private final boolean mirrored;
