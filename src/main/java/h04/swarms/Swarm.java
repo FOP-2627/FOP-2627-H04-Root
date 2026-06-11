@@ -17,18 +17,17 @@ import org.tudalgo.algoutils.student.annotation.DoNotTouch;
  * {@link ProjectionMatrix}.
  * </p>
  */
+@DoNotTouch
 public abstract class Swarm {
 
     /**
      * The x-coordinate of the bottom-left corner of the swarm in the Tetris world.
      */
-    @DoNotTouch
     protected int x;
 
     /**
      * The y-coordinate of the bottom-left corner of the swarm in the Tetris world.
      */
-    @DoNotTouch
     protected int y;
 
     /**
@@ -39,7 +38,6 @@ public abstract class Swarm {
     /**
      * The projection matrix that defines the swarm shape.
      */
-    @DoNotTouch
     protected ProjectionMatrix projectionMatrix;
 
     /**
@@ -47,7 +45,6 @@ public abstract class Swarm {
      *
      * @return the x-coordinate of the swarm position
      */
-    @DoNotTouch
     public int getX() {
         return x;
     }
@@ -57,7 +54,6 @@ public abstract class Swarm {
      *
      * @return the y-coordinate of the swarm position
      */
-    @DoNotTouch
     public int getY() {
         return y;
     }
@@ -67,7 +63,6 @@ public abstract class Swarm {
      *
      * @return the projection matrix of this swarm
      */
-    @DoNotTouch
     public ProjectionMatrix getProjectionMatrix() {
         return projectionMatrix;
     }
@@ -77,7 +72,6 @@ public abstract class Swarm {
      *
      * @param projectionMatrix the projection matrix to set
      */
-    @DoNotTouch
     public void setProjectionMatrix(ProjectionMatrix projectionMatrix) {
         this.projectionMatrix = projectionMatrix;
     }
@@ -88,7 +82,6 @@ public abstract class Swarm {
      * @param x the x-coordinate of the swarm
      * @param y the y-coordinate of the swarm
      */
-    @DoNotTouch
     public Swarm(int x, int y) {
         this.x = x;
         this.y = y;
@@ -100,7 +93,6 @@ public abstract class Swarm {
      * @param direction the direction to move
      * @throws IllegalArgumentException if {@code direction} is {@link Direction#UP}
      */
-    @DoNotTouch
     public void move(Direction direction) throws IllegalArgumentException {
         if (direction == Direction.UP)
             throw new IllegalArgumentException("Direction UP is not supported for Swarm movement.");
@@ -140,7 +132,6 @@ public abstract class Swarm {
      * @return {@code true} if the swarm can move in the specified direction,
      *         otherwise {@code false}
      */
-    @DoNotTouch
     public boolean canMove(Direction direction) {
         if (direction == Direction.UP)
             return false;
@@ -160,7 +151,6 @@ public abstract class Swarm {
     /**
      * Spawns the swarm in the Tetris world.
      */
-    @DoNotTouch
     public void spawn() {
         if (this.tetrobots != null) {
             for (int i = 0; i < tetrobots.length; i++) {
@@ -179,7 +169,6 @@ public abstract class Swarm {
     /**
      * Commits the current SRS rotation to the robots in the world.
      */
-    @DoNotTouch
     public void commitSRSRotation() {
         int[][] projected = projectionMatrix.projectToWorld(x, y);
         for (int i = 0; i < tetrobots.length; i++) {
@@ -193,7 +182,6 @@ public abstract class Swarm {
     /**
      * Rotates the swarm 90 degrees clockwise.
      */
-    @DoNotTouch
     public void turnRight() {
         projectionMatrix.rotateRight();
         commitSRSRotation();
@@ -202,7 +190,6 @@ public abstract class Swarm {
     /**
      * Rotates the swarm 90 degrees counterclockwise.
      */
-    @DoNotTouch
     public void turnLeft() {
         projectionMatrix.rotateLeft();
         commitSRSRotation();
