@@ -7,7 +7,7 @@ import org.sourcegrade.jagr.api.rubric.RubricProvider;
 
 import static org.tudalgo.algoutils.tutor.general.jagr.RubricUtils.criterion;
 
-public class H04_RubricProvider implements RubricProvider {
+public class H04_RubricProviderPrivate implements RubricProvider {
 
     private static final Criterion H4_1_1 = Criterion.builder()
         .shortDescription("H4.1.1 | Erstellen von Tetrobot")
