@@ -1,0 +1,311 @@
+[ {
+  "type" : "class",
+  "typeName" : "h04.swarms.I",
+  "declaredConstructors" : [ {
+    "name" : "h04.swarms.I",
+    "parameters" : "int, int"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "toString",
+    "parameters" : ""
+  }, {
+    "name" : "spawn",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.swarms.L",
+  "declaredConstructors" : [ {
+    "name" : "h04.swarms.L",
+    "parameters" : "int, int, boolean"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "toString",
+    "parameters" : ""
+  }, {
+    "name" : "spawn",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.swarms.O",
+  "declaredConstructors" : [ {
+    "name" : "h04.swarms.O",
+    "parameters" : "int, int"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "toString",
+    "parameters" : ""
+  }, {
+    "name" : "spawn",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.swarms.S",
+  "declaredConstructors" : [ {
+    "name" : "h04.swarms.S",
+    "parameters" : "int, int, boolean"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "toString",
+    "parameters" : ""
+  }, {
+    "name" : "spawn",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.swarms.Swarm",
+  "declaredConstructors" : [ {
+    "name" : "h04.swarms.Swarm",
+    "parameters" : "int, int"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "move",
+    "parameters" : "fopbot.Direction"
+  }, {
+    "name" : "turnLeft",
+    "parameters" : ""
+  }, {
+    "name" : "spawn",
+    "parameters" : ""
+  }, {
+    "name" : "commitSRSRotation",
+    "parameters" : ""
+  }, {
+    "name" : "getX",
+    "parameters" : ""
+  }, {
+    "name" : "getY",
+    "parameters" : ""
+  }, {
+    "name" : "getProjectionMatrix",
+    "parameters" : ""
+  }, {
+    "name" : "setProjectionMatrix",
+    "parameters" : "h04.ProjectionMatrix"
+  }, {
+    "name" : "canMove",
+    "parameters" : "fopbot.Direction"
+  }, {
+    "name" : "turnRight",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.swarms.T",
+  "declaredConstructors" : [ {
+    "name" : "h04.swarms.T",
+    "parameters" : "int, int"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "toString",
+    "parameters" : ""
+  }, {
+    "name" : "spawn",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.swarms.TestSwarm",
+  "declaredConstructors" : [ {
+    "name" : "h04.swarms.TestSwarm",
+    "parameters" : "int, int"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "toString",
+    "parameters" : ""
+  }, {
+    "name" : "move",
+    "parameters" : "fopbot.Direction"
+  }, {
+    "name" : "turnLeft",
+    "parameters" : ""
+  }, {
+    "name" : "spawn",
+    "parameters" : ""
+  }, {
+    "name" : "turnRight",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.GameLoop",
+  "declaredConstructors" : [ {
+    "name" : "h04.GameLoop",
+    "parameters" : ""
+  } ],
+  "declaredMethods" : [ {
+    "name" : "moveLeftRightChecked",
+    "parameters" : "fopbot.Direction"
+  }, {
+    "name" : "moveDownChecked",
+    "parameters" : ""
+  }, {
+    "name" : "rotateChecked",
+    "parameters" : "boolean"
+  }, {
+    "name" : "handleInput",
+    "parameters" : "fopbot.KeyPressEvent"
+  }, {
+    "name" : "handleTestInput",
+    "parameters" : "fopbot.KeyPressEvent, fopbot.Robot"
+  }, {
+    "name" : "gameLoop",
+    "parameters" : ""
+  }, {
+    "name" : "inputTest",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.Main",
+  "declaredConstructors" : [ {
+    "name" : "h04.Main",
+    "parameters" : ""
+  } ],
+  "declaredMethods" : [ {
+    "name" : "main",
+    "parameters" : "java.lang.String[]"
+  }, {
+    "name" : "printMatrix",
+    "parameters" : "h04.ProjectionMatrix, java.lang.String"
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.ProjectionMatrix",
+  "declaredConstructors" : [ {
+    "name" : "h04.ProjectionMatrix",
+    "parameters" : "h04.Tetromino"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "clone",
+    "parameters" : ""
+  }, {
+    "name" : "clone",
+    "parameters" : ""
+  }, {
+    "name" : "rotateLeft",
+    "parameters" : ""
+  }, {
+    "name" : "rotateRight",
+    "parameters" : ""
+  }, {
+    "name" : "getShape",
+    "parameters" : ""
+  }, {
+    "name" : "getPivotX2",
+    "parameters" : ""
+  }, {
+    "name" : "getPivotY2",
+    "parameters" : ""
+  }, {
+    "name" : "projectToWorld",
+    "parameters" : "int, int"
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.TetrisWorld",
+  "declaredConstructors" : [ {
+    "name" : "h04.TetrisWorld",
+    "parameters" : ""
+  } ],
+  "declaredMethods" : [ {
+    "name" : "drop",
+    "parameters" : ""
+  }, {
+    "name" : "getActiveSwarm",
+    "parameters" : ""
+  }, {
+    "name" : "canProject",
+    "parameters" : "h04.swarms.Swarm"
+  }, {
+    "name" : "canProject",
+    "parameters" : "h04.ProjectionMatrix, int, int"
+  }, {
+    "name" : "setActiveSwarm",
+    "parameters" : "h04.swarms.Swarm"
+  }, {
+    "name" : "clearRows",
+    "parameters" : ""
+  }, {
+    "name" : "clearActiveSwarm",
+    "parameters" : ""
+  }, {
+    "name" : "fixActiveSwarm",
+    "parameters" : ""
+  }, {
+    "name" : "debugPrint2",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.Tetrobot",
+  "declaredConstructors" : [ {
+    "name" : "h04.Tetrobot",
+    "parameters" : "int, int"
+  } ],
+  "declaredMethods" : [ {
+    "name" : "despawn",
+    "parameters" : ""
+  }, {
+    "name" : "isFrontClear",
+    "parameters" : "fopbot.FieldEntity[]"
+  }, {
+    "name" : "isFrontClear",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "enum",
+  "typeName" : "h04.Tetromino",
+  "declaredConstructors" : [ ],
+  "declaredMethods" : [ {
+    "name" : "values",
+    "parameters" : ""
+  }, {
+    "name" : "valueOf",
+    "parameters" : "java.lang.String"
+  }, {
+    "name" : "mirrored",
+    "parameters" : ""
+  }, {
+    "name" : "getShape",
+    "parameters" : ""
+  }, {
+    "name" : "deepCopy",
+    "parameters" : "boolean[][]"
+  }, {
+    "name" : "getPivotX2",
+    "parameters" : ""
+  }, {
+    "name" : "getPivotY2",
+    "parameters" : ""
+  } ]
+}, {
+  "type" : "class",
+  "typeName" : "h04.Utils",
+  "declaredConstructors" : [ {
+    "name" : "h04.Utils",
+    "parameters" : ""
+  } ],
+  "declaredMethods" : [ {
+    "name" : "sleep",
+    "parameters" : "int"
+  }, {
+    "name" : "isWithinBounds",
+    "parameters" : "int, int"
+  }, {
+    "name" : "getEntitiesInFrontOf",
+    "parameters" : "fopbot.Robot"
+  }, {
+    "name" : "removeRobot",
+    "parameters" : "fopbot.Robot"
+  }, {
+    "name" : "getEntitiesAt",
+    "parameters" : "int, int"
+  }, {
+    "name" : "removeEntity",
+    "parameters" : "fopbot.FieldEntity, fopbot.KarelWorld"
+  } ]
+} ]

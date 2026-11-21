@@ -24,3 +24,17 @@ submission {
 dependencies {
     implementation(libs.fopbot)
 }
+
+jagr {
+    graders {
+        val graderPrivate by getting {
+            graderName.set("FOP-2627-H04-Private")
+            rubricProviderName.set("h04.H04_RubricProviderPrivate")
+        }
+        val graderJavadoc by creating {
+            parent(graderPrivate)
+            graderName.set("FOP-2627-H04-Javadoc")
+            rubricProviderName.set("h04.H04_RubricProviderJavadoc")
+        }
+    }
+}
